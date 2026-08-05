@@ -1,45 +1,60 @@
 "use client";
 
+import { useLayoutEffect } from "react";
 import { Section } from "@/components/common/Section";
-import { useGsapScrollTrigger } from "@/animations/hooks/useGsapScrollTrigger";
-import { timeline as milestones } from "@/data/social";
+import { timeline } from "@/data/timeline";
+import { timelineAnimation } from "@/animations/timelineAnimation";
 
-/**
- * Journey — a pinned scene where vertical scroll is translated into
- * horizontal motion across the milestone track. The pin duration is
- * proportional to the number of milestones so pacing stays consistent if
- * more are added later.
- */
 export function Timeline() {
-  const trackLength = milestones.length;
+  useLayoutEffect(() => {
+    const tl = timelineAnimation();
 
-  const sceneRef = useGsapScrollTrigger<HTMLDivElement>(
-    ({ timeline }) => {
-      const track = document.querySelector<HTMLElement>("[data-timeline-track]");
-      if (!track) return;
-      timeline.to(track, {
-        x: () => -(track.scrollWidth - window.innerWidth),
-        ease: "none",
-      });
-    },
-    { pin: true, end: () => `+=${trackLength * 600}`, scrub: 1 }
-  );
+    return () => {
+      tl?.kill();
+    };
+  }, []);
 
   return (
-    <Section id="timeline" index="02" label="Journey" bleed>
-      <div ref={sceneRef} className="relative h-svh overflow-hidden">
+    <Section
+      id="timeline"
+      index="02"
+      label="Journey"
+      className="relative py-40"
+    >
+      {/* Animated Spine */}
+      <div className="absolute left-[92px] top-40 bottom-40 w-px bg-white/10">
         <div
-          data-timeline-track
-          className="flex h-full items-center gap-24 pl-12 pr-[50vw]"
-        >
-          {milestones.map((m) => (
-            <article key={m.id} className="w-[min(70vw,480px)] shrink-0">
-              <span className="font-mono text-sm text-aurora-cyan">{m.year}</span>
-              <h3 className="mt-3 font-display text-3xl font-medium text-ink">{m.title}</h3>
-              <p className="mt-3 max-w-xs font-body text-ink-muted">{m.description}</p>
-            </article>
-          ))}
-        </div>
+          data-timeline-line
+          className="absolute left-0 top-0 h-full w-full origin-top bg-cyan-400"
+        />
+      </div>
+
+      <div className="relative mx-auto flex max-w-6xl flex-col gap-40">
+        {timeline.map((item) => (
+          <article
+            key={item.id}
+            data-timeline-item
+            className="grid gap-10 lg:grid-cols-[180px_1fr]"
+          >
+            {/* Year */}
+            <div className="sticky top-32 h-fit">
+              <h2 className="font-display text-7xl font-black text-cyan-300">
+                {item.year}
+              </h2>
+            </div>
+
+            {/* Content */}
+            <div className="space-y-6">
+              <h3 className="font-display text-5xl font-black uppercase text-white">
+                {item.title}
+              </h3>
+
+              <p className="max-w-2xl text-xl leading-9 text-white/65">
+                {item.description}
+              </p>
+            </div>
+          </article>
+        ))}
       </div>
     </Section>
   );

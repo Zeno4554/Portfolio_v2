@@ -5,15 +5,20 @@ import { ScrollTrigger } from "@/lib/gsap";
 import { buildHeadlineReveal } from "@/animations/timelines/headlineReveal";
 import { cn } from "@/lib/utils";
 
-interface HeadlineProps {
-  children: string;
+interface HeadlineProps
+  extends React.HTMLAttributes<HTMLHeadingElement> {
+  children: React.ReactNode;
   as?: "h1" | "h2" | "h3";
-  className?: string;
 }
 
-/** Word-staggered scroll-reveal headline. Reverts split DOM on unmount for SEO/a11y. */
-export function Headline({ children, as = "h2", className }: HeadlineProps) {
+export function Headline({
+  children,
+  as = "h2",
+  className,
+  ...props
+}: HeadlineProps) {
   const ref = useRef<HTMLHeadingElement>(null);
+
   const Tag = as;
 
   useLayoutEffect(() => {
@@ -21,6 +26,7 @@ export function Headline({ children, as = "h2", className }: HeadlineProps) {
     if (!el) return;
 
     const { timeline, revert } = buildHeadlineReveal(el);
+
     const trigger = ScrollTrigger.create({
       trigger: el,
       start: "top 85%",
@@ -37,7 +43,11 @@ export function Headline({ children, as = "h2", className }: HeadlineProps) {
   return (
     <Tag
       ref={ref}
-      className={cn("font-display font-medium leading-[1.05] tracking-tight text-ink", className)}
+      className={cn(
+        "font-display font-medium leading-[1.05] tracking-tight text-ink",
+        className
+      )}
+      {...props}
     >
       {children}
     </Tag>

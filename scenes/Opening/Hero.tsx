@@ -2,20 +2,17 @@
 
 import { useRef } from "react";
 import { HERO } from "./constants";
+import LightSweep from "./LightSweep";
 import { useOpeningAnimation } from "./useOpeningAnimation";
 
 export default function Hero() {
   const hero = useRef<HTMLDivElement>(null);
-
   const role = useRef<HTMLParagraphElement>(null);
-
   const title = useRef<HTMLHeadingElement>(null);
-
   const mission = useRef<HTMLParagraphElement>(null);
-
   const scroll = useRef<HTMLDivElement>(null);
-
   const background = useRef<HTMLDivElement>(null);
+  const lightSweep = useRef<HTMLDivElement>(null);
 
   useOpeningAnimation({
     hero,
@@ -24,15 +21,21 @@ export default function Hero() {
     mission,
     scroll,
     background,
+    lightSweep,
   });
 
   return (
     <>
+      {/* Background overlay */}
       <div
         ref={background}
         className="absolute inset-0 -z-10 bg-gradient-to-b from-blue-500/10 via-transparent to-transparent"
       />
 
+      {/* Animated light sweep */}
+      <LightSweep ref={lightSweep} />
+
+      {/* Hero */}
       <div
         ref={hero}
         className="relative z-20 flex min-h-screen flex-col items-center justify-center px-6 text-center"

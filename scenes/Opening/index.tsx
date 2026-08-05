@@ -1,7 +1,7 @@
 "use client";
 
+import Background from "./Background";
 import Hero from "./Hero";
-import AuroraBackground from "./AuroraBackground";
 import ScrollCue from "./ScrollCue";
 
 export function Opening() {
@@ -10,7 +10,7 @@ export function Opening() {
       id="opening"
       className="relative min-h-screen overflow-hidden bg-black"
     >
-      <AuroraBackground />
+      <Background />
 
       <Hero />
 
