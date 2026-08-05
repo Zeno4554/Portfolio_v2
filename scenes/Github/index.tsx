@@ -1,3 +1,5 @@
+"use client";
+
 import { Section } from "@/components/common/Section";
 import { MagneticButton } from "@/components/buttons/MagneticButton";
 import { socialLinks } from "@/data/social";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, RefObject } from "react";
+import { RefObject, useLayoutEffect } from "react";
 import { openingTimeline } from "@/animations/openingTimeline";
 
 interface OpeningRefs {
@@ -10,6 +10,7 @@ interface OpeningRefs {
   mission: RefObject<HTMLParagraphElement | null>;
   scroll: RefObject<HTMLDivElement | null>;
   background: RefObject<HTMLDivElement | null>;
+  lightSweep: RefObject<HTMLDivElement | null>;
 }
 
 export function useOpeningAnimation({
@@ -18,6 +19,7 @@ export function useOpeningAnimation({
   mission,
   scroll,
   background,
+  lightSweep,
 }: OpeningRefs) {
   useLayoutEffect(() => {
     if (
@@ -25,7 +27,8 @@ export function useOpeningAnimation({
       !role.current ||
       !title.current ||
       !mission.current ||
-      !scroll.current
+      !scroll.current ||
+      !lightSweep.current
     ) {
       return;
     }
@@ -36,10 +39,18 @@ export function useOpeningAnimation({
       title: title.current,
       mission: mission.current,
       scroll: scroll.current,
+      lightSweep: lightSweep.current,
     });
 
     return () => {
       tl.kill();
     };
-  }, [background, role, title, mission, scroll]);
+  }, [
+    background,
+    role,
+    title,
+    mission,
+    scroll,
+    lightSweep,
+  ]);
 }

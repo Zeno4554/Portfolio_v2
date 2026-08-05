@@ -7,6 +7,7 @@ import LightBeam from "./LightBeam";
 import NoiseOverlay from "./NoiseOverlay";
 import Vignette from "./Vignette";
 
+
 import { useBackgroundAnimation } from "../useBackgroundAnimation";
 
 export default function Background() {

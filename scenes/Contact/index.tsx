@@ -1,3 +1,5 @@
+"use client";
+
 import { Section } from "@/components/common/Section";
 import { Headline } from "@/components/typography/Headline";
 import { MagneticButton } from "@/components/buttons/MagneticButton";
@@ -7,18 +9,29 @@ export function Contact() {
   const mail = socialLinks.find((l) => l.id === "mail");
 
   return (
-    <Section id="contact" index="08" label="Contact" className="flex min-h-svh flex-col justify-center py-32">
+    <Section
+      id="contact"
+      index="08"
+      label="Contact"
+      className="flex min-h-svh flex-col justify-center py-32"
+    >
       <Headline as="h2" className="text-hero max-w-3xl">
         Let's build something worth remembering.
       </Headline>
 
       <div className="mt-10 flex flex-wrap items-center gap-6">
         {mail && (
-          <MagneticButton onClick={() => (window.location.href = mail.href)}>
+          <MagneticButton
+            onClick={() => window.location.href = mail.href}
+          >
             {mail.label} me
           </MagneticButton>
         )}
-        <nav aria-label="Social links" className="flex gap-6">
+
+        <nav
+          aria-label="Social links"
+          className="flex gap-6"
+        >
           {socialLinks
             .filter((l) => l.id !== "mail")
             .map((link) => (
@@ -37,7 +50,7 @@ export function Contact() {
 
       <footer className="mt-24 flex items-center justify-between border-t border-glass-border pt-8 font-mono text-[11px] text-ink-faint">
         <span>© {new Date().getFullYear()}</span>
-        <span>Built with Next.js, GSAP &amp; React Three Fiber</span>
+        <span>Built with Next.js, GSAP & React Three Fiber</span>
       </footer>
     </Section>
   );

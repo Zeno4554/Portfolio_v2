@@ -1,8 +1,11 @@
 "use client";
 
-export default function ScrollCue() {
+import { forwardRef } from "react";
+
+const ScrollCue = forwardRef<HTMLDivElement>((_, ref) => {
   return (
     <div
+      ref={ref}
       className="
         absolute
         bottom-10
@@ -12,9 +15,14 @@ export default function ScrollCue() {
         uppercase
         tracking-[0.4em]
         text-white/40
+        will-change-transform
       "
     >
       SCROLL
     </div>
   );
-}
+});
+
+ScrollCue.displayName = "ScrollCue";
+
+export default ScrollCue;
