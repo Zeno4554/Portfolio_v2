@@ -192,27 +192,13 @@ export default function useInsideBuildAnimation() {
       Mechanical Iris
       ==========================================
       */
+      /*
+      The iris is intentionally static.
 
-      gsap.to("[data-reactor-iris]", {
-        rotate: 360,
-        svgOrigin: "250 250",
-        duration: 80,
-        repeat: -1,
-        ease: "none",
-      });
-
-      gsap.utils
-        .toArray<SVGGElement>("[data-reactor-blade]")
-        .forEach((blade, index) => {
-          gsap.to(blade, {
-            rotation: index % 2 === 0 ? 2 : -2,
-            svgOrigin: "250 250",
-            duration: 2 + index * 0.15,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-          });
-        });
+      Only the engineering rings rotate while the
+      turbine blades remain fixed like a real
+      mechanical assembly.
+      */
 
       /*
       ==========================================
@@ -230,45 +216,45 @@ export default function useInsideBuildAnimation() {
       });
 
       /*
-==========================================
-Blueprint Scan
-==========================================
-*/
+      ==========================================
+      Blueprint Scan
+      ==========================================
+      */
 
-gsap.set("[data-blueprint-scan]", {
-  y: "-10%",
-});
+      gsap.set("[data-blueprint-scan]", {
+        y: "-10%",
+      });
 
-gsap.to("[data-blueprint-scan]", {
-  y: "110%",
-  duration: 3,
-  ease: "none",
-  repeat: -1,
-});
+      gsap.to("[data-blueprint-scan]", {
+        y: "110%",
+        duration: 3,
+        ease: "none",
+        repeat: -1,
+      });
 
-/*
-==========================================
-Blueprint Modules
-==========================================
-*/
+      /*
+      ==========================================
+      Blueprint Modules
+      ==========================================
+      */
 
-gsap.from("[data-blueprint-node]", {
-  opacity: 0,
-  y: 40,
-  scale: .85,
-  stagger: .18,
-  duration: .8,
-  ease: "power3.out",
-});
+      gsap.from("[data-blueprint-node]", {
+        opacity: 0,
+        y: 40,
+        scale: 0.85,
+        stagger: 0.18,
+        duration: 0.8,
+        ease: "power3.out",
+      });
 
-gsap.to("[data-module-status]", {
-  scale: .65,
-  opacity: .35,
-  repeat: -1,
-  yoyo: true,
-  duration: .7,
-  stagger: .15,
-});
+      gsap.to("[data-module-status]", {
+        scale: 0.65,
+        opacity: 0.35,
+        repeat: -1,
+        yoyo: true,
+        duration: 0.7,
+        stagger: 0.15,
+      });
 
       /*
       ==========================================

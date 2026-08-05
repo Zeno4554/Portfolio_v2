@@ -9,40 +9,98 @@ interface Props {
 export default function ReactorIris({
   accent,
 }: Props) {
+  const BLADE_COUNT = 24;
+
   return (
     <g data-reactor-iris>
 
-      {/* Outer Iris Ring */}
+      {/* =======================================================
+          OUTER REAR HOUSING
+      ======================================================= */}
 
       <circle
         cx="250"
         cy="250"
-        r="96"
+        r="112"
+        fill="#0A1017"
+        stroke="#2E3E50"
+        strokeWidth="5"
+      />
+
+      {/* Inner Groove */}
+
+      <circle
+        cx="250"
+        cy="250"
+        r="104"
         fill="none"
-        stroke="rgba(255,255,255,.08)"
+        stroke="#496175"
+        strokeOpacity=".45"
         strokeWidth="2"
       />
 
-      {/* Blades */}
+      {/* =======================================================
+          TURBINE BLADES
+      ======================================================= */}
 
-      {Array.from({ length: 8 }).map((_, index) => (
+      {Array.from({ length: BLADE_COUNT }).map((_, index) => (
         <ReactorBlade
           key={index}
           accent={accent}
-          angle={index * 45}
+          angle={(360 / BLADE_COUNT) * index}
         />
       ))}
 
-      {/* Inner Housing */}
+      {/* =======================================================
+          FRONT RETAINING RING
+      ======================================================= */}
 
       <circle
         cx="250"
         cy="250"
-        r="62"
-        fill="rgba(8,8,10,.95)"
-        stroke={accent}
+        r="84"
+        fill="none"
+        stroke="#BFDFFF"
+        strokeOpacity=".18"
+        strokeWidth="2"
+      />
+
+      <circle
+        cx="250"
+        cy="250"
+        r="78"
+        fill="#0C1118"
+        stroke="#6A87A4"
+        strokeOpacity=".45"
+        strokeWidth="2"
+      />
+
+      {/* =======================================================
+          INNER MECHANICAL HUB
+      ======================================================= */}
+
+      <circle
+        cx="250"
+        cy="250"
+        r="56"
+        fill="#070B10"
+        stroke="#9EDCFF"
+        strokeOpacity=".35"
         strokeWidth="1.5"
       />
+
+      {/* Small Engineering Ring */}
+
+      <circle
+        cx="250"
+        cy="250"
+        r="49"
+        fill="none"
+        stroke="#7FB9E5"
+        strokeOpacity=".25"
+        strokeWidth="1"
+      />
+
     </g>
   );
 }

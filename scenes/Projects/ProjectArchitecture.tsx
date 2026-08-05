@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from "react";
 
 import { Project } from "./projectsData";
 
-import ProjectNode from "./ProjectNode";
+import ArchitectureNode from "./ArchitectureNode";
 import ProjectDetails from "./ProjectDetails";
-import ProjectConnector from "./ProjectConnector";
-import useInsideBuildAnimation from "./useInsideBuildAnimation";
-import ArcReactor from "./ArcReactor";
+import BlueprintConnector from "./blueprint/BlueprintConnector";
+import useInsideBuildAnimation from "./hooks/useInsideBuildAnimation";
+import ArcReactor from "./reactor/ArcReactor";
 
 interface Props {
   project: Project;
@@ -194,15 +194,16 @@ export default function ProjectArchitecture({ project }: Props) {
               "
             >
               <ArcReactor
-                accent={project.accent}
-                active={true}
-                onOpen={() => setBlueprintOpen((v) => !v)}
-              />
+  project={project}
+  accent={project.accent}
+  active={blueprintOpen}
+  onOpen={() => setBlueprintOpen((v) => !v)}
+/>
             </div>
           </div>
 
           {connectors.map((connector) => (
-            <ProjectConnector
+            <BlueprintConnector
               key={connector.id}
               x1={connector.x1}
               y1={connector.y1}
@@ -215,7 +216,7 @@ export default function ProjectArchitecture({ project }: Props) {
 
           {/* Nodes */}
           {project.insideBuild.map((module) => (
-            <ProjectNode
+            <ArchitectureNode
               key={module.id}
               ref={(el) => {
                 nodeRefs.current[module.id] = el;
