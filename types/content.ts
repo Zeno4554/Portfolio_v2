@@ -23,6 +23,7 @@ export interface ExperienceEntry {
   id: string;
   company: string;
   role: string;
+  location?: string;
   start: string; // ISO date
   end: string | "present";
   summary: string;

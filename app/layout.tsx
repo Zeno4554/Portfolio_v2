@@ -26,17 +26,17 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: `${SITE.name} — ${SITE.role}`,
+  title: "Anurag — Software Engineer",
   description: SITE.description,
   openGraph: {
-    title: `${SITE.name} — ${SITE.role}`,
+    title: "Anurag — Software Engineer",
     description: SITE.description,
     url: SITE.url,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE.name} — ${SITE.role}`,
+    title: "Anurag — Software Engineer",
     description: SITE.description,
   },
 };

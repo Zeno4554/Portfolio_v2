@@ -23,28 +23,67 @@
   --font-display: "Space Grotesk", sans-serif;
   --font-body: "Inter", sans-serif;
 
-  --text-hero: clamp(4rem, 10vw, 10rem);
-  --text-display: clamp(2.5rem, 5vw, 5rem);
-  --text-title: clamp(1.75rem, 3vw, 2.75rem);
+  --text-hero: clamp(3.25rem, 10vw, 10rem);
+  --text-display: clamp(2.25rem, 5vw, 5rem);
+  --text-title: clamp(1.5rem, 3vw, 2.75rem);
 
   /* Motion */
   --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* =========================================================
+   GLOBAL FOUNDATION
+   ========================================================= */
+
 html {
   background: var(--color-void);
   color-scheme: dark;
+  overflow-x: hidden;
 }
 
 body {
+  margin: 0;
+  min-width: 320px;
   background: var(--color-void);
   color: var(--color-ink);
   font-family: var(--font-body);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Lenis */
+/*
+ * Prevent accidental horizontal overflow from cinematic scenes,
+ * large typography and 3D/canvas elements.
+ */
+main {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/*
+ * Make media responsive by default.
+ */
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+/*
+ * Canvas elements used by R3F should never create horizontal
+ * page overflow.
+ */
+canvas {
+  display: block;
+}
+
+/* =========================================================
+   LENIS
+   ========================================================= */
+
 html.lenis {
   height: auto;
 }
@@ -57,19 +96,138 @@ html.lenis {
   overflow: hidden;
 }
 
-/* Glass */
+/* =========================================================
+   GLASS
+   ========================================================= */
+
 .glass-panel {
-  background: color-mix(in oklab, var(--color-surface) 60%, transparent);
+  background: color-mix(
+    in oklab,
+    var(--color-surface) 60%,
+    transparent
+  );
   border: 1px solid var(--color-glass-border);
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
 }
 
-/* GPU */
+/* =========================================================
+   GPU
+   ========================================================= */
+
 .gpu-layer {
   transform: translateZ(0);
   will-change: transform, opacity;
 }
+
+/* =========================================================
+   RESPONSIVE TYPOGRAPHY
+   ========================================================= */
+
+/*
+ * Prevent long cinematic headings from forcing the viewport wider.
+ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+/*
+ * Long technical/project strings should wrap rather than overflow.
+ */
+p,
+span,
+a {
+  overflow-wrap: break-word;
+}
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+:focus-visible {
+  outline: 2px solid var(--color-aurora-blue);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   TABLET — <= 768px
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /*
+   * Reduce the amount of horizontal breathing room used by the
+   * desktop layout while preserving the cinematic feel.
+   */
+  section {
+    max-width: 100%;
+  }
+
+  /*
+   * Avoid large fixed/absolute elements accidentally extending
+   * outside the viewport.
+   */
+  [class*="absolute"] {
+    max-width: 100vw;
+  }
+
+  /*
+   * Make glass effects slightly cheaper on smaller screens.
+   * This does not alter the visual identity.
+   */
+  .glass-panel {
+    backdrop-filter: blur(14px) saturate(130%);
+    -webkit-backdrop-filter: blur(14px) saturate(130%);
+  }
+}
+
+/* =========================================================
+   MOBILE — <= 480px
+   ========================================================= */
+
+@media (max-width: 480px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /*
+   * Mobile typography should remain cinematic without allowing
+   * giant headings to dominate the entire viewport.
+   */
+  :root {
+    --text-hero: clamp(2.75rem, 15vw, 5rem);
+    --text-display: clamp(2rem, 11vw, 3.5rem);
+    --text-title: clamp(1.35rem, 7vw, 2rem);
+  }
+
+  /*
+   * Smaller blur is easier on mobile GPUs.
+   */
+  .glass-panel {
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+  }
+
+  /*
+   * Avoid overly aggressive GPU hints on every element.
+   * Only elements explicitly using .gpu-layer get will-change.
+   */
+  .gpu-layer {
+    transform: translateZ(0);
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -82,7 +240,61 @@ html.lenis {
   }
 }
 
-:focus-visible {
-  outline: 2px solid var(--color-aurora-blue);
-  outline-offset: 3px;
+/* =========================================================
+   ODYSSEY
+   ========================================================= */
+
+@keyframes flicker {
+  0%,
+  100% {
+    transform: scaleY(1) scaleX(1) rotate(0deg);
+    opacity: 0.9;
+  }
+
+  22% {
+    transform: scaleY(1.18) scaleX(0.88) rotate(-4deg);
+    opacity: 1;
+  }
+
+  48% {
+    transform: scaleY(0.85) scaleX(1.08) rotate(3deg);
+    opacity: 0.78;
+  }
+
+  71% {
+    transform: scaleY(1.1) scaleX(0.94) rotate(-2deg);
+    opacity: 0.95;
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.6;
+  }
+
+  85% {
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: translateY(-40px) translateX(6px);
+    opacity: 0;
+  }
+}
+
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
