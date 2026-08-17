@@ -1,5 +1,5 @@
 /**
- * Central registry of the 9 cinematic scenes. This drives:
+ * Central registry of the 8 cinematic scenes. This drives:
  *  - the scene order rendered in app/page.tsx
  *  - the scroll-progress markers used by the global camera/nav
  *  - lazy-loading boundaries (each scene is dynamically imported)
@@ -10,19 +10,18 @@
 export const SCENES = [
   { id: "opening", label: "Opening", index: "00" },
   { id: "identity", label: "Identity", index: "01" },
-  { id: "timeline", label: "Journey", index: "02" },
+  { id: "evolution", label: "Odyssey", index: "02" },
   { id: "skills", label: "Skills Galaxy", index: "03" },
   { id: "projects", label: "Projects", index: "04" },
   { id: "experience", label: "Experience", index: "05" },
-  { id: "stats", label: "Statistics", index: "06" },
-  { id: "github", label: "GitHub", index: "07" },
-  { id: "contact", label: "Contact", index: "08" },
+  { id: "github", label: "GitHub", index: "06" },
+  { id: "contact", label: "Contact", index: "07" },
 ] as const;
 
 export type SceneId = (typeof SCENES)[number]["id"];
 
 export const SITE = {
-  name: "Portfolio v1",
+  name: "Anurag",
   role: "Software Engineer — AI, Full Stack & Cloud Systems",
   description:
     "A cinematic, scroll-driven interactive portfolio for an engineer working across AI, full-stack development, cloud infrastructure, and intelligent systems.",

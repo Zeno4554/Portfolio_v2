@@ -4,17 +4,21 @@ import { useEffect, useRef, useState } from "react";
 
 import { Project } from "./projectsData";
 
-import ProjectNode from "./ProjectNode";
+import ArchitectureNode from "./ArchitectureNode";
 import ProjectDetails from "./ProjectDetails";
-import ProjectConnector from "./ProjectConnector";
-import useInsideBuildAnimation from "./useInsideBuildAnimation";
-import ArcReactor from "./ArcReactor";
+import BlueprintConnector from "./blueprint/BlueprintConnector";
+import useInsideBuildAnimation from "./hooks/useInsideBuildAnimation";
+import ArcReactor from "./reactor/ArcReactor";
 
 interface Props {
   project: Project;
+  onOpen: () => void;
 }
 
-export default function ProjectArchitecture({ project }: Props) {
+export default function ProjectArchitecture({
+  project,
+  onOpen,
+}: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
@@ -24,7 +28,17 @@ export default function ProjectArchitecture({ project }: Props) {
 
   const [activeModule, setActiveModule] = useState(project.insideBuild[0]);
 
-  const [blueprintOpen, setBlueprintOpen] = useState(false);
+  const [reactorActive, setReactorActive] = useState(false);
+
+  useEffect(() => {
+    if (!reactorActive) return;
+
+    const timer = setTimeout(() => {
+      setReactorActive(false);
+    }, 600);
+
+    return () => clearTimeout(timer);
+  }, [reactorActive]);
 
   const [connectors, setConnectors] = useState<
     {
@@ -194,15 +208,61 @@ export default function ProjectArchitecture({ project }: Props) {
               "
             >
               <ArcReactor
+                project={project}
                 accent={project.accent}
-                active={true}
-                onOpen={() => setBlueprintOpen((v) => !v)}
+                active={reactorActive}
+                onOpen={() => {
+                  setReactorActive(true);
+                  onOpen();
+                }}
               />
             </div>
           </div>
 
+          {/* Console Button */}
+          <div
+            className="
+              absolute
+              left-1/2
+              top-[82%]
+              z-30
+              -translate-x-1/2
+            "
+          >
+            <button
+              onClick={onOpen}
+              className="
+                group
+                rounded-full
+                border
+                border-white/10
+                bg-black/60
+                px-8
+                py-3
+                backdrop-blur-xl
+                transition-all
+                duration-300
+                hover:scale-105
+                hover:border-white/30
+              "
+            >
+              <span
+                className="
+                  font-mono
+                  text-xs
+                  uppercase
+                  tracking-[.45em]
+                  text-white/80
+                  group-hover:text-white
+                "
+              >
+                ENTER ENGINEERING CONSOLE
+              </span>
+            </button>
+          </div>
+
           {connectors.map((connector) => (
-            <ProjectConnector
+            <BlueprintConnector
               key={connector.id}
               x1={connector.x1}
               y1={connector.y1}
@@ -215,7 +275,7 @@ export default function ProjectArchitecture({ project }: Props) {
 
           {/* Nodes */}
           {project.insideBuild.map((module) => (
-            <ProjectNode
+            <ArchitectureNode
               key={module.id}
               ref={(el) => {
                 nodeRefs.current[module.id] = el;

@@ -11,7 +11,7 @@ export function Contact() {
   return (
     <Section
       id="contact"
-      index="08"
+      index="07"
       label="Contact"
       className="flex min-h-svh flex-col justify-center py-32"
     >

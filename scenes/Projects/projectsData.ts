@@ -2,11 +2,11 @@ export interface InsideBuildModule {
   id: string;
   title: string;
   tech: string;
-responsibilities: string[];
-flow: string[];
- folders: string[];
- engineeringNotes: string;
-   metrics: {
+  responsibilities: string[];
+  flow: string[];
+  folders: string[];
+  engineeringNotes: string;
+  metrics: {
     latency: string;
     status: string;
     load: string;
@@ -39,6 +39,8 @@ export interface Project {
   features: string[];
 
   technologies: string[];
+
+  folderTree: string[];
 
   github?: string;
 
@@ -124,6 +126,15 @@ export const projects: Project[] = [
       "Tailwind CSS",
     ],
 
+    folderTree: [
+      "client",
+      "server",
+      "prisma",
+      "controllers",
+      "middleware",
+      "cloudinary"
+    ],
+
     github: "#",
   },
 
@@ -199,6 +210,15 @@ export const projects: Project[] = [
       "FastAPI",
       "PostgreSQL",
       "Web Dashboard",
+    ],
+
+    folderTree: [
+      "frontend",
+      "backend",
+      "agents",
+      "memory",
+      "llm",
+      "docker"
     ],
 
     github: "#",
@@ -281,15 +301,24 @@ export const projects: Project[] = [
       "ESP8266",
     ],
 
+    folderTree: [
+      "firmware",
+      "aws-iot",
+      "analytics",
+      "ml-pipeline",
+      "grafana",
+      "docker"
+    ],
+
     github: "#",
   },
 
   {
     id: "drone",
 
-    title: "AEROCORRIDOR",
+    title: "SKYCORRIDOR",
 
-    fullTitle: "AeroCorridor",
+    fullTitle: "SkyCorridor",
 
     tagline:
       "3D intelligent drone navigation for next-generation urban mobility.",
@@ -353,6 +382,15 @@ export const projects: Project[] = [
       "Streamlit",
       "FastAPI",
       "PostgreSQL",
+    ],
+
+    folderTree: [
+      "pathfinding",
+      "simulation",
+      "api",
+      "spatial-db",
+      "fleet",
+      "docker"
     ],
 
     github: "#",
@@ -432,6 +470,14 @@ export const projects: Project[] = [
       "Prisma ORM",
       "JWT",
       "Razorpay",
+    ],
+
+    folderTree: [
+      "frontend",
+      "backend",
+      "database",
+      "docker",
+      "cloud"
     ],
 
     github: "#",

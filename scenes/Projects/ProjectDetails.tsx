@@ -68,7 +68,7 @@ export default function ProjectDetails({
                   color: accent,
                 }}
               >
-                SYSTEM DIAGNOSTICS
+                TECH STACK
               </p>
 
               <h2
@@ -90,7 +90,6 @@ export default function ProjectDetails({
               <div className="flex items-center justify-end gap-3">
 
                 <div
-                  data-status-dot
                   className="h-3 w-3 rounded-full"
                   style={{
                     background: accent,
@@ -104,13 +103,13 @@ export default function ProjectDetails({
                     color: accent,
                   }}
                 >
-                  ONLINE
+                  CORE STACK
                 </span>
 
               </div>
 
               <p className="mt-3 font-mono text-[11px] tracking-[0.35em] text-white/40">
-                ACTIVE MODULE
+                TECH-FIRST DELIVERY
               </p>
 
             </div>
@@ -126,7 +125,7 @@ export default function ProjectDetails({
             <div>
 
               <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-white/40">
-                TECHNOLOGY
+                STACK
               </p>
 
               <p
@@ -145,11 +144,11 @@ export default function ProjectDetails({
             <div>
 
               <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-white/40">
-                STATUS
+                FOCUS
               </p>
 
               <p className="mt-3 text-2xl font-bold text-white">
-                OPERATIONAL
+                {title}
               </p>
 
             </div>
@@ -159,7 +158,7 @@ export default function ProjectDetails({
             <div>
 
               <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-white/40">
-                SYSTEM HEALTH
+                IMPACT
               </p>
 
               <p
@@ -168,7 +167,7 @@ export default function ProjectDetails({
                   color: accent,
                 }}
               >
-                100%
+                HIGH
               </p>
 
             </div>

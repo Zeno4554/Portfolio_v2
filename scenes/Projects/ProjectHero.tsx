@@ -45,10 +45,10 @@ export default function ProjectHero({
         {project.title}
       </h2>
 
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl items-center gap-24 px-12">
+      <div className="relative z-10 mx-auto flex min-h-screen flex-col gap-12 px-6 py-12 lg:flex-row lg:items-center lg:gap-20 lg:px-12">
 
         {/* LEFT */}
-        <div className="flex-1 max-w-3xl">
+        <div className="w-full lg:w-[45%]">
 
           <p
             data-eyebrow
@@ -120,7 +120,7 @@ export default function ProjectHero({
 
         <div
           data-project-image
-          className="relative w-[680px] shrink-0"
+          className="relative w-full max-w-full shrink-0 aspect-[16/9] min-h-[440px] sm:min-h-[520px] lg:w-[55%]"
         >
 
           <div
@@ -139,6 +139,7 @@ export default function ProjectHero({
           <div
             className="
               relative
+              h-full
               overflow-hidden
               rounded-[42px]
               border
@@ -151,12 +152,13 @@ export default function ProjectHero({
             <Image
               src={project.heroImage}
               alt={project.fullTitle}
-              width={1600}
-              height={900}
+              width={1920}
+              height={1080}
               priority
               className="
-                h-auto
+                h-full
                 w-full
+                rounded-[42px]
                 object-cover
                 transition-transform
                 duration-700

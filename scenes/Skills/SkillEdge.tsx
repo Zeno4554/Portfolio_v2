@@ -1,16 +1,21 @@
 "use client";
 
+import { memo } from "react";
 import { SkillNodeData } from "./galaxyData";
-import { getSkillCenter } from "./layout";
+import { getSkillCenter, CATEGORY_CLUSTERS } from "./layout";
 
 interface SkillEdgeProps {
   from: SkillNodeData;
   to: SkillNodeData;
+  isHighlighted?: boolean;
+  isDimmed?: boolean;
 }
 
-export default function SkillEdge({
+function SkillEdge({
   from,
   to,
+  isHighlighted,
+  isDimmed,
 }: SkillEdgeProps) {
   const start = getSkillCenter(from);
   const end = getSkillCenter(to);
@@ -21,9 +26,13 @@ export default function SkillEdge({
   const length = Math.sqrt(dx * dx + dy * dy);
   const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
 
+  const cluster = CATEGORY_CLUSTERS[from.category];
+
   return (
     <div
-      className="absolute"
+      className={`absolute will-change-transform transition-opacity duration-500 ${
+        isDimmed ? "opacity-15" : isHighlighted ? "opacity-100 z-30" : "opacity-40"
+      }`}
       style={{
         left: start.x,
         top: start.y,
@@ -32,72 +41,35 @@ export default function SkillEdge({
         transformOrigin: "0 50%",
       }}
     >
-      {/* Ambient Glow */}
+      {/* Ambient Line Glow */}
       <div
-        className="
-          absolute
-          left-0
-          top-1/2
-          h-[6px]
-          w-full
-          -translate-y-1/2
-          rounded-full
-          bg-cyan-400/10
-          blur-md
-          pointer-events-none
-        "
+        className="pointer-events-none absolute left-0 top-1/2 h-[5px] w-full -translate-y-1/2 rounded-full transition-all duration-300"
+        style={{
+          backgroundColor: isHighlighted ? cluster.color : "transparent",
+          filter: "blur(4px)",
+          opacity: isHighlighted ? 0.6 : 0.15,
+        }}
       />
 
       {/* Base Line */}
       <div
-        className="
-          absolute
-          left-0
-          top-1/2
-          h-px
-          w-full
-          -translate-y-1/2
-          rounded-full
-          bg-white/10
-        "
+        className="absolute left-0 top-1/2 h-[1px] w-full -translate-y-1/2 transition-colors duration-300"
+        style={{
+          backgroundColor: isHighlighted ? cluster.color : "rgba(255,255,255,0.18)",
+        }}
       />
 
-      {/* Animated Line */}
+      {/* Animated Luminous Edge */}
       <div
         data-edge
-        className="
-          absolute
-          left-0
-          top-1/2
-          h-px
-          w-full
-          -translate-y-1/2
-          origin-left
-          scale-x-0
-          rounded-full
-          bg-cyan-300
-          shadow-[0_0_16px_rgba(34,211,238,0.9)]
-          will-change-transform
-        "
-      />
-
-      {/* Energy Pulse */}
-      <div
-        data-pulse
-        className="
-          absolute
-          left-0
-          top-1/2
-          h-2.5
-          w-2.5
-          -translate-x-1/2
-          -translate-y-1/2
-          rounded-full
-          bg-cyan-300
-          opacity-0
-          shadow-[0_0_20px_rgba(34,211,238,1)]
-        "
+        className="will-change-transform absolute left-0 top-1/2 h-[1px] w-full -translate-y-1/2 origin-left scale-x-0 rounded-full transition-all duration-300"
+        style={{
+          backgroundColor: cluster.color,
+          boxShadow: isHighlighted ? `0 0 12px ${cluster.color}` : undefined,
+        }}
       />
     </div>
   );
 }
+
+export default memo(SkillEdge);

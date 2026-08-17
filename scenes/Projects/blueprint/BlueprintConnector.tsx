@@ -1,6 +1,6 @@
 "use client";
 
-interface ProjectConnectorProps {
+interface BlueprintConnectorProps {
   x1: number;
   y1: number;
   x2: number;
@@ -9,14 +9,14 @@ interface ProjectConnectorProps {
   active: boolean;
 }
 
-export default function ProjectConnector({
+export default function BlueprintConnector({
   x1,
   y1,
   x2,
   y2,
   accent,
   active,
-}: ProjectConnectorProps) {
+}: BlueprintConnectorProps) {
   const gradientId = `gradient-${accent.replace("#", "")}`;
 
   const dx = Math.abs(x2 - x1) * 0.45;
@@ -58,7 +58,6 @@ export default function ProjectConnector({
       </defs>
 
       {/* Glow Path */}
-
       <path
         d={path}
         stroke={accent}
@@ -69,7 +68,6 @@ export default function ProjectConnector({
       />
 
       {/* Main Path */}
-
       <path
         data-connector
         d={path}
@@ -80,8 +78,7 @@ export default function ProjectConnector({
         opacity={active ? 1 : 0.28}
       />
 
-      {/* Node */}
-
+      {/* Start Node */}
       <circle
         cx={x1}
         cy={y1}
@@ -90,8 +87,7 @@ export default function ProjectConnector({
         opacity={active ? 1 : 0.45}
       />
 
-      {/* Reactor */}
-
+      {/* End Node */}
       <circle
         cx={x2}
         cy={y2}

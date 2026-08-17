@@ -9,7 +9,7 @@ export function Github() {
   const githubLink = socialLinks.find((l) => l.id === "github");
 
   return (
-    <Section id="github" index="07" label="GitHub" className="py-32">
+    <Section id="github" index="06" label="GitHub" className="py-32">
       <div className="grid gap-12 md:grid-cols-[1fr_1.2fr] md:items-center">
         <div>
           <h2 className="font-display text-display font-medium text-ink">
