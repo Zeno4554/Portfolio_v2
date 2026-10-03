@@ -1,10 +1,14 @@
 "use client";
 
-import { Project } from "../../projectsData";
 import CloseButton from "./CloseButton";
 
+interface HeaderProject {
+  title: string;
+  accent: string;
+}
+
 interface Props {
-  project: Project;
+  project: HeaderProject;
   onClose: () => void;
 }
 
@@ -14,7 +18,7 @@ export default function DeepDiveHeader({
 }: Props) {
   return (
     <header
-     data-deepdive-header
+      data-deepdive-header
       className="
         flex
         items-center

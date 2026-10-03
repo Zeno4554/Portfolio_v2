@@ -7,7 +7,7 @@ export type DroneStageId =
   | "simulation"
   | "docker";
 
-export const DRONE_STAGES: DroneStageId[] = [
+export const DRONE_STAGES: [DroneStageId, ...DroneStageId[]] = [
   "route-planning",
   "navigation-core",
   "mission-api",

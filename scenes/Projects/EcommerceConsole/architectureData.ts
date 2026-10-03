@@ -16,7 +16,7 @@ export interface GraphEdge {
   to: string;
 }
 
-export const graphNodes: GraphNode[] = [
+export const graphNodes: [GraphNode, ...GraphNode[]] = [
   {
     id: "browser",
     title: "Browser",

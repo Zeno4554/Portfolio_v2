@@ -25,8 +25,11 @@ export default function AIConsole() {
       className="
         flex
         flex-col
+        min-w-0
         gap-6
-        p-8
+        p-4
+        sm:p-6
+        xl:p-8
       "
     >
       {/* Top */}
@@ -34,14 +37,16 @@ export default function AIConsole() {
       <div
         className="
           grid
-          grid-cols-[1.7fr_1fr]
-          gap-6
-          h-[360px]
+          grid-cols-1
+          gap-4
           min-h-0
           overflow-hidden
+          lg:h-[360px]
+          lg:grid-cols-[1.7fr_1fr]
+          lg:gap-6
         "
       >
-        <div className="min-h-0 h-full">
+        <div className="h-[300px] min-h-0 lg:h-full">
           <PromptTerminal
             prompt={pipeline.prompt}
             onPromptChange={pipeline.setPrompt}
@@ -50,7 +55,7 @@ export default function AIConsole() {
           />
         </div>
 
-        <div className="min-h-0 h-full">
+        <div className="h-[300px] min-h-0 lg:h-full">
           <ConversationPanel messages={pipeline.messages} />
         </div>
       </div>
@@ -60,8 +65,11 @@ export default function AIConsole() {
       <div
         className="
           grid
-          grid-cols-[minmax(0,1fr)_380px]
-          gap-6
+          min-w-0
+          grid-cols-1
+          gap-4
+          xl:grid-cols-[minmax(0,1fr)_380px]
+          xl:gap-6
         "
       >
         <div className="min-w-0">
@@ -79,7 +87,7 @@ export default function AIConsole() {
           />
         </div>
 
-        <div className="min-w-[380px] w-[380px]">
+        <div className="min-w-0 w-full xl:min-w-[380px] xl:w-[380px]">
           <NodeDetails
             node={activeNode}
           />

@@ -49,6 +49,9 @@ export default function useEcommercePipeline() {
     }
 
     const stage = stages[stageIndex];
+    if (!stage) {
+      throw new Error(`The ecommerce pipeline has no stage at index ${stageIndex}.`);
+    }
     setActiveStage(stage);
     setMessages((prev) => [
       ...prev,

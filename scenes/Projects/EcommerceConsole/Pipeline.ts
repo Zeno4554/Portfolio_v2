@@ -10,7 +10,7 @@ export type EcommerceStageId =
   | "payment"
   | "order-completion";
 
-export const ECOMMERCE_STAGES: EcommerceStageId[] = [
+export const ECOMMERCE_STAGES: [EcommerceStageId, ...EcommerceStageId[]] = [
   "browser",
   "react-router",
   "authentication",

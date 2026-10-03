@@ -67,10 +67,7 @@ export default function Blueprint({
 
         {/* Connection Lines */}
 
-        <BlueprintLines
-          project={project}
-          accent={accent}
-        />
+        <BlueprintLines accent={accent} />
 
         {/* Modules */}
 

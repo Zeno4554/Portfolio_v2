@@ -3,6 +3,7 @@
 import { ReactNode } from "react";
 
 import { Project } from "../../projectsData";
+import { ProjectData } from "../../AIAgent/data/projectData";
 
 import useDeepDiveAnimation from "../hooks/useDeepDiveAnimation";
 
@@ -10,15 +11,12 @@ import { resolveConsoleComponent } from "../consoleRegistry";
 import DeepDiveHeader from "./DeepDiveHeader";
 import BootSequence from "../sections/BootSequence";
 
+type DeepDiveProject = Project | ProjectData;
+
 interface Props {
-  project: Project | null;
+  project: DeepDiveProject | null;
   open: boolean;
   onClose: () => void;
-
-  /**
-   * Optional custom content.
-   * If not provided, the default EngineeringConsole is rendered.
-   */
   children?: ReactNode;
 }
 
@@ -28,14 +26,6 @@ export default function DeepDiveOverlay({
   onClose,
   children,
 }: Props) {
-
-  // 👇 Debug
-  console.log("========== DEEPDIVE ==========");
-  console.log("Project:", project?.title);
-  console.log("Open:", open);
-  console.log("Children:", children);
-  console.log("==============================");
-
   useDeepDiveAnimation({
     open,
   });
@@ -48,20 +38,19 @@ export default function DeepDiveOverlay({
       className="fixed inset-0 z-[300]"
     >
       {/* Background */}
-
       <div className="absolute inset-0 bg-black/90 backdrop-blur-3xl" />
 
       {/* Accent */}
-
       <div
         className="absolute inset-0 opacity-20"
         style={{
-          background: `radial-gradient(circle at center, ${project?.accent}, transparent 70%)`,
+          background: `radial-gradient(circle at center, ${
+            project?.accent ?? "#ffffff"
+          }, transparent 70%)`,
         }}
       />
 
       {/* Console */}
-
       <div
         data-deepdive-console
         className="
@@ -73,11 +62,9 @@ export default function DeepDiveOverlay({
         "
       >
         {/* Boot Animation */}
-
         {project && <BootSequence project={project} />}
 
         {/* Header */}
-
         {project && (
           <DeepDiveHeader
             project={project}
@@ -86,12 +73,23 @@ export default function DeepDiveOverlay({
         )}
 
         {/* Project Content */}
-
         <div className="flex-1 overflow-auto touch-auto overscroll-contain">
           {children ? (
             children
           ) : (
-            project && (() => {
+            project &&
+            (() => {
+              /*
+               * The default Engineering Console is only used for the
+               * standard Project data structure.
+               *
+               * AI Assistant supplies its own custom console through
+               * `children`, so this branch never receives ProjectData.
+               */
+              if (!("insideBuild" in project)) {
+                return null;
+              }
+
               const ConsoleComponent = resolveConsoleComponent(project);
 
               if (!ConsoleComponent) {

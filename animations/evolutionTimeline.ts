@@ -41,6 +41,10 @@ export function evolutionTimeline() {
   });
 
   nodes.forEach((node, i) => {
+    const core = cores[i];
+    const glow = glows[i];
+    const edge = edges[i];
+
     tl.to(
       node,
       {
@@ -51,27 +55,31 @@ export function evolutionTimeline() {
       ">"
     );
 
-    tl.to(
-      cores[i],
-      {
-        scale: 1.8,
-        duration: 0.3,
-      },
-      "<"
-    );
-
-    tl.to(
-      glows[i],
-      {
-        opacity: 1,
-        duration: 0.35,
-      },
-      "<"
-    );
-
-    if (edges[i]) {
+    if (core) {
       tl.to(
-        edges[i],
+        core,
+        {
+          scale: 1.8,
+          duration: 0.3,
+        },
+        "<"
+      );
+    }
+
+    if (glow) {
+      tl.to(
+        glow,
+        {
+          opacity: 1,
+          duration: 0.35,
+        },
+        "<"
+      );
+    }
+
+    if (edge) {
+      tl.to(
+        edge,
         {
           scaleX: 1,
           duration: 0.4,

@@ -5,11 +5,7 @@ import { galaxyTimeline } from "@/animations/timelines/galaxyTimeline";
 
 export function useGalaxyAnimation() {
   useLayoutEffect(() => {
-    const tl = galaxyTimeline();
-
-    return () => {
-      tl?.scrollTrigger?.kill();
-      tl?.kill();
-    };
+    const context = galaxyTimeline();
+    return () => context?.revert();
   }, []);
 }

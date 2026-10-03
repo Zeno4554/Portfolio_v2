@@ -35,8 +35,12 @@ const ProjectNode = forwardRef<
         ref={ref}
         data-project-node
         data-title={title}
+        aria-pressed={active}
         onMouseEnter={onHover}
+        onFocus={onHover}
+        onClick={onHover}
         className="
+          project-architecture-node
           absolute
           -translate-x-1/2
           -translate-y-1/2

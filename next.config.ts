@@ -10,8 +10,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   transpilePackages: ["three", "@react-three/fiber", "@react-three/drei"],
+  typedRoutes: true,
   experimental: {
-    typedRoutes: true,
     optimizePackageImports: ["gsap", "lucide-react", "framer-motion"],
   },
   images: {

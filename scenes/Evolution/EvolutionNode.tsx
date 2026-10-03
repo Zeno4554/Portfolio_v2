@@ -44,7 +44,6 @@ export default function EvolutionNode({
             backdrop-blur-xl
             transition-all
             duration-500
-            will-change-transform
           "
         >
           <div

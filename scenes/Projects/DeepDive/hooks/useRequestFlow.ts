@@ -12,7 +12,7 @@ const FLOW = [
   "services",
   "prisma",
   "postgres",
-];
+] as const;
 
 export default function useRequestFlow() {
   const [running, setRunning] = useState(false);
@@ -23,7 +23,11 @@ export default function useRequestFlow() {
 
     let index = 0;
 
-    setActive(FLOW[0]);
+    const firstStage = FLOW[0];
+    if (!firstStage) {
+      throw new Error("The project request flow must include at least one stage.");
+    }
+    setActive(firstStage);
 
     const timer = setInterval(() => {
       index++;
@@ -35,17 +39,22 @@ export default function useRequestFlow() {
         return;
       }
 
-      setActive(FLOW[index]);
+      const stage = FLOW[index];
+      if (!stage) {
+        throw new Error(`The project request flow has no stage at index ${index}.`);
+      }
+      setActive(stage);
     }, 650);
 
     return () => clearInterval(timer);
   }, [running]);
 
- return {
-  running,
-  active,
-  start: () => {
-    if (running) return;
-    setRunning(true);
-  },
-};
+  return {
+    running,
+    active,
+    start: () => {
+      if (running) return;
+      setRunning(true);
+    },
+  };
+}

@@ -1,9 +1,10 @@
 "use client";
 
-import { GraphNode } from "./architectureData";
+import type { GraphNode } from "./architectureData";
 
+type PositionedGraphNode = GraphNode & { x: number; y: number };
 interface Props {
-  node: GraphNode;
+  node: PositionedGraphNode;
   active: boolean;
   onHover: (id: string) => void;
   onLeave: () => void;
