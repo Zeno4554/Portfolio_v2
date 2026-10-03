@@ -67,7 +67,7 @@ export default function ProjectHero({
         <div className="w-full min-w-0 max-w-3xl flex-1">
 
           <p
-            className="font-mono text-sm tracking-[.45em]"
+            className="font-mono text-[10px] tracking-[.2em] sm:text-sm sm:tracking-[.45em]"
             style={{
               color: project.accent,
             }}
@@ -79,7 +79,7 @@ export default function ProjectHero({
             className="
               mt-6
               font-display
-              text-[clamp(3rem,8vw,8rem)]
+              text-[clamp(2.75rem,12vw,8rem)]
               font-black
               uppercase
               leading-[0.9]
@@ -91,11 +91,12 @@ export default function ProjectHero({
 
           <p
             className="
-              mt-10
+              mt-6
               max-w-2xl
               text-base
               leading-7
               text-white/70
+              sm:mt-10
               sm:text-xl
               sm:leading-relaxed
             "
@@ -103,7 +104,7 @@ export default function ProjectHero({
             {project.tagline}
           </p>
 
-          <div className="mt-14 flex flex-wrap gap-4">
+          <div className="mt-8 flex flex-wrap gap-2.5 sm:mt-10 sm:gap-3 lg:mt-14 lg:gap-4">
             {project.technologies.map((tech) => (
               <span
                 key={tech.name}
@@ -112,10 +113,13 @@ export default function ProjectHero({
                   border
                   border-white/10
                   bg-white/5
-                  px-5
-                  py-2
-                  text-sm
+                  px-3
+                  py-1.5
+                  text-xs
                   text-white/80
+                  sm:px-5
+                  sm:py-2
+                  sm:text-sm
                 "
               >
                 {tech.name}
@@ -125,7 +129,7 @@ export default function ProjectHero({
 
         </div>
 
-        <div className="relative aspect-[16/9] min-h-[280px] w-full max-w-[720px] shrink-0 sm:min-h-[420px] lg:w-[50%]">
+        <div className="relative aspect-[16/9] min-h-[220px] w-full max-w-[720px] shrink-0 sm:min-h-[320px] lg:min-h-[420px] lg:w-[50%]">
 
           <div
             className="

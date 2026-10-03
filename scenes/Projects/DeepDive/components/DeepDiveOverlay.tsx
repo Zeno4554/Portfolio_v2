@@ -38,7 +38,7 @@ export default function DeepDiveOverlay({
       className="fixed inset-0 z-[300]"
     >
       {/* Background */}
-      <div className="absolute inset-0 bg-black/90 backdrop-blur-3xl" />
+      <div className="absolute inset-0 bg-[#05050a]" />
 
       {/* Accent */}
       <div

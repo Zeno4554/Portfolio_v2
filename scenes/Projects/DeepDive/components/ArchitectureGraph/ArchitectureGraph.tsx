@@ -6,6 +6,7 @@ import {
   graphEdges,
   graphNodes,
 } from "./architectureData";
+import ResponsiveArchitectureFlow from "../ResponsiveArchitectureFlow";
 
 interface Props {
   onSelect: (id: string) => void;
@@ -40,7 +41,7 @@ export default function ArchitectureGraph({
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeNode, setActiveNode] =
-    useState<string | null>(null);
+    useState<string | null>(graphNodes[0].id);
 
   const positionedNodes = useMemo(() => {
     return graphNodes.map((node) => ({
@@ -51,16 +52,28 @@ export default function ArchitectureGraph({
   }, []);
 
   return (
-    <div
-      className="
-        flex
+    <>
+      <ResponsiveArchitectureFlow
+        nodes={graphNodes}
+        activeId={activeFlow ?? activeNode}
+        onSelect={(id) => {
+          setActiveNode(id);
+          onSelect(id);
+        }}
+        tone="cyan"
+      />
+
+      <div
+        className="
+        hidden
         w-full
         flex-1
         min-h-0
         items-start
         justify-center
+        lg:flex
       "
-    >
+      >
       <div
         ref={containerRef}
         className="relative w-full max-w-[980px]"
@@ -369,6 +382,7 @@ export default function ArchitectureGraph({
           })}
         </svg>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

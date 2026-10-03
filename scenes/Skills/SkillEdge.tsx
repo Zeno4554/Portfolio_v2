@@ -23,8 +23,9 @@ function SkillEdge({
   const dx = end.x - start.x;
   const dy = end.y - start.y;
 
-  const length = Math.sqrt(dx * dx + dy * dy);
-  const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+  const length = Math.round(Math.sqrt(dx * dx + dy * dy) * 100) / 100;
+  const angle =
+    Math.round(((Math.atan2(dy, dx) * 180) / Math.PI) * 100) / 100;
 
   const cluster = CATEGORY_CLUSTERS[from.category];
 
@@ -36,7 +37,7 @@ function SkillEdge({
       style={{
         left: start.x,
         top: start.y,
-        width: `${length}px`,
+        width: length,
         transform: `rotate(${angle}deg)`,
         transformOrigin: "0 50%",
       }}

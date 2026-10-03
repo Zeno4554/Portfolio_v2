@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { graphEdges, graphNodes } from "./architectureData";
+import ResponsiveArchitectureFlow from "../DeepDive/components/ResponsiveArchitectureFlow";
 
 interface Props {
   activeFlow?: string | null;
@@ -35,7 +36,17 @@ export default function EcommerceArchitectureGraph({ activeFlow, onSelect }: Pro
   );
 
   return (
-    <div className="relative h-[760px] min-w-0 w-full overflow-hidden rounded-3xl border border-white/10 bg-[#05060c]/90">
+    <>
+      <ResponsiveArchitectureFlow
+        nodes={graphNodes}
+        activeId={activeFlow ?? activeNode}
+        onSelect={(id) => {
+          setActiveNode(id);
+          onSelect(id);
+        }}
+        tone="violet"
+      />
+      <div className="relative hidden h-[760px] min-w-0 w-full overflow-hidden rounded-3xl border border-white/10 bg-[#05060c]/90 lg:block">
       <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1680 760" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id="nodeBg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -101,6 +112,7 @@ export default function EcommerceArchitectureGraph({ activeFlow, onSelect }: Pro
           );
         })}
       </svg>
-    </div>
+      </div>
+    </>
   );
 }

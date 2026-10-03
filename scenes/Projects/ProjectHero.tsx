@@ -48,14 +48,14 @@ export default function ProjectHero({
         {project.title}
       </h2>
 
-      <div className="relative z-10 mx-auto flex min-h-screen flex-col gap-12 px-6 py-12 lg:flex-row lg:items-center lg:gap-20 lg:px-12">
+      <div className="relative z-10 mx-auto flex min-h-svh w-full max-w-7xl flex-col gap-8 px-5 py-24 sm:gap-10 sm:px-8 lg:min-h-screen lg:flex-row lg:items-center lg:gap-20 lg:px-12">
 
         {/* LEFT */}
-        <div className="w-full lg:w-[45%]">
+        <div className="w-full min-w-0 lg:w-[45%]">
 
           <p
             data-eyebrow
-            className="font-mono text-sm uppercase tracking-[0.45em]"
+            className="font-mono text-[10px] uppercase tracking-[0.25em] sm:text-sm sm:tracking-[0.45em]"
             style={{
               color: project.accent,
             }}
@@ -68,7 +68,7 @@ export default function ProjectHero({
             className="
               mt-6
               font-display
-              text-[clamp(4rem,8vw,8rem)]
+              text-[clamp(2.75rem,12vw,8rem)]
               font-black
               uppercase
               leading-[0.9]
@@ -84,9 +84,11 @@ export default function ProjectHero({
             className="
               mt-10
               max-w-2xl
-              text-xl
-              leading-relaxed
+              text-base
+              leading-7
               text-white/70
+              sm:text-xl
+              sm:leading-relaxed
             "
           >
             {project.tagline}
@@ -94,7 +96,7 @@ export default function ProjectHero({
 
           <div
             data-tech-container
-            className="mt-14 flex flex-wrap gap-4"
+            className="mt-8 flex flex-wrap gap-2.5 sm:mt-10 sm:gap-3 lg:mt-14 lg:gap-4"
           >
             {project.technologies.map((tech) => (
               <span
@@ -105,11 +107,14 @@ export default function ProjectHero({
                   border
                   border-white/10
                   bg-white/5
-                  px-5
-                  py-2
-                  text-sm
+                  px-3
+                  py-1.5
+                  text-xs
                   text-white/80
                   backdrop-blur-xl
+                  sm:px-5
+                  sm:py-2
+                  sm:text-sm
                 "
               >
                 {tech}
@@ -123,14 +128,14 @@ export default function ProjectHero({
 
         <div
           data-project-image
-          className="relative w-full max-w-full shrink-0 aspect-[16/9] min-h-[440px] sm:min-h-[520px] lg:w-[55%]"
+          className="relative aspect-[16/9] min-h-[220px] w-full max-w-full shrink-0 sm:min-h-[320px] lg:min-h-[440px] lg:w-[55%]"
         >
 
           <div
             className="
               absolute
               inset-0
-              rounded-[42px]
+              rounded-2xl sm:rounded-[32px] lg:rounded-[42px]
               blur-[140px]
             "
             style={{
@@ -144,7 +149,7 @@ export default function ProjectHero({
               relative
               h-full
               overflow-hidden
-              rounded-[42px]
+              rounded-2xl sm:rounded-[32px] lg:rounded-[42px]
               border
               border-white/10
               bg-white/[0.03]
@@ -161,7 +166,7 @@ export default function ProjectHero({
               className="
                 h-full
                 w-full
-                rounded-[42px]
+                rounded-2xl sm:rounded-[32px] lg:rounded-[42px]
                 object-cover
                 transition-transform
                 duration-700

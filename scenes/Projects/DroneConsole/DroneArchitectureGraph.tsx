@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { graphEdges, graphNodes } from "./architectureData";
+import ResponsiveArchitectureFlow from "../DeepDive/components/ResponsiveArchitectureFlow";
 
 interface Props {
   activeFlow?: string | null;
@@ -19,7 +20,7 @@ const COLUMN_X = {
 const ROW_Y = [140, 260, 380, 500, 620];
 
 export default function DroneArchitectureGraph({ activeFlow, onSelect }: Props) {
-  const [activeNode, setActiveNode] = useState<string | null>(null);
+  const [activeNode, setActiveNode] = useState<string | null>(graphNodes[0].id);
 
   const positionedNodes = useMemo(
     () =>
@@ -32,7 +33,17 @@ export default function DroneArchitectureGraph({ activeFlow, onSelect }: Props) 
   );
 
   return (
-    <div className="relative h-[760px] min-w-0 w-full overflow-hidden rounded-3xl border border-white/10 bg-[#040d16]/90">
+    <>
+      <ResponsiveArchitectureFlow
+        nodes={graphNodes}
+        activeId={activeFlow ?? activeNode}
+        onSelect={(id) => {
+          setActiveNode(id);
+          onSelect(id);
+        }}
+        tone="sky"
+      />
+      <div className="relative hidden h-[760px] min-w-0 w-full overflow-hidden rounded-3xl border border-white/10 bg-[#040d16]/90 lg:block">
       <svg
         className="absolute inset-0 h-full w-full"
         viewBox="0 0 1440 760"
@@ -126,6 +137,7 @@ export default function DroneArchitectureGraph({ activeFlow, onSelect }: Props) 
           );
         })}
       </svg>
-    </div>
+      </div>
+    </>
   );
 }

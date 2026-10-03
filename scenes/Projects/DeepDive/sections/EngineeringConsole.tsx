@@ -36,6 +36,8 @@ export default function EngineeringConsole({
         p-4
         sm:p-6
         min-h-full
+        md:grid-cols-[220px_minmax(0,1fr)]
+        lg:grid-cols-[260px_minmax(0,1fr)]
         xl:grid-cols-[300px_minmax(0,1fr)_340px]
         xl:p-8
       "
@@ -94,16 +96,16 @@ export default function EngineeringConsole({
           sm:p-6
         "
       >
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <p
-            className="font-mono text-xs tracking-[.45em]"
+            className="font-mono text-[10px] tracking-[.25em] sm:text-xs sm:tracking-[.45em]"
             style={{ color: project.accent }}
           >
             SYSTEM ARCHITECTURE
           </p>
 
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 font-mono text-xs text-cyan-300">
+          <div className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center sm:justify-end sm:gap-4">
+            <div className="flex items-center gap-2 font-mono text-[10px] text-cyan-300 sm:text-xs">
               <span
                 className={`h-2 w-2 rounded-full transition-colors duration-300 ${
                   flow.running
@@ -125,16 +127,21 @@ export default function EngineeringConsole({
                 rounded-full
                 border
                 border-cyan-400/20
-                px-5
+                px-3
                 py-2
                 font-mono
-                text-xs
-                tracking-[.3em]
+                text-[10px]
+                tracking-[.15em]
                 text-cyan-300
                 transition-all
                 hover:border-cyan-300
                 hover:bg-cyan-400/10
                 disabled:opacity-40
+                w-full
+                sm:px-5
+                sm:text-xs
+                sm:tracking-[.3em]
+                sm:w-auto
               "
             >
               {flow.running
@@ -147,10 +154,11 @@ export default function EngineeringConsole({
         <div
           className="
             mt-6
-            flex-1
+            flex-none
             min-h-0
             w-full
             flex
+            lg:flex-1
           "
         >
           <ArchitectureGraph
@@ -176,10 +184,12 @@ export default function EngineeringConsole({
         min-w-0
         min-h-0
         gap-6
+        md:col-span-2
         md:grid-cols-2
         xl:flex
         flex-col
         xl:w-[340px]
+        xl:col-span-1
         xl:grid-cols-1
         "
       >

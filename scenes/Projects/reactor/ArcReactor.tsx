@@ -29,6 +29,8 @@ export default function ArcReactor({
   return (
     <div
       className="
+        w-full
+        max-w-[440px]
         relative
         flex
         items-center
@@ -50,15 +52,19 @@ export default function ArcReactor({
       ========================================== */}
 
       <button
+        type="button"
+        aria-label={`Open ${project.title} engineering console`}
         onClick={onOpen}
         className="
+          arc-reactor-control
           relative
           z-20
           flex
-          h-[440px]
-          w-[440px]
+          w-full
+          max-w-[440px]
           items-center
           justify-center
+          aspect-square
           transition-transform
           duration-500
           hover:scale-[1.02]

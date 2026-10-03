@@ -237,6 +237,14 @@ a {
    PROJECT ARCHITECTURE / DEEP-DIVE RESPONSIVENESS
    ========================================================= */
 
+.project-architecture-cta {
+  transform: translateX(-50%);
+}
+
+.project-architecture-reactor {
+  transform: translate(-50%, -50%);
+}
+
 @media (max-width: 1023px) {
   .project-architecture-layout {
     display: grid;
@@ -282,6 +290,7 @@ a {
     justify-self: center;
     margin-top: 0.5rem;
     transform: none !important;
+    translate: none !important;
   }
 }
 
@@ -317,16 +326,52 @@ a {
 @media (max-width: 480px) {
   .project-architecture-layout {
     grid-template-columns: minmax(0, 1fr);
+    gap: 0.625rem;
+    margin-top: 1.5rem;
+    padding-top: min(88vw, 360px);
+    width: calc(100% - 2rem);
+  }
+
+  .project-architecture-reactor {
+    display: block;
+    width: min(88vw, 360px) !important;
+  }
+
+  .project-architecture-reactor > div:last-child {
+    height: min(88vw, 360px);
+  }
+
+  .project-architecture-reactor .arc-reactor-control {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .project-architecture-reactor [data-blueprint] {
+    width: min(760px, 160vw);
+  }
+
+  .project-architecture-node {
+    padding: 0.75rem 1rem;
   }
 
   .project-architecture-cta {
     grid-column: 1;
+    justify-self: stretch;
     width: 100%;
+    margin-top: 0.5rem;
+    margin-inline: 0;
   }
 
   .project-architecture-cta button {
     width: 100%;
     padding-inline: 1rem;
+  }
+
+  .project-architecture-cta button span {
+    display: block;
+    line-height: 1.5;
+    text-align: center;
+    white-space: normal;
   }
 }
 

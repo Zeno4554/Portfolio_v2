@@ -6,6 +6,7 @@ import {
   graphNodes,
   graphEdges,
 } from "../data/architecture";
+import ResponsiveArchitectureFlow from "../../DeepDive/components/ResponsiveArchitectureFlow";
 
 interface Props {
   activeFlow?: string | null;
@@ -35,7 +36,7 @@ export default function ArchitectureGraph({
   onSelect,
 }: Props) {
   const [activeNode, setActiveNode] =
-    useState<string | null>(null);
+    useState<string | null>(graphNodes[0]?.id ?? null);
 
   const positionedNodes = useMemo(() => {
     return graphNodes.map((node) => ({
@@ -46,7 +47,17 @@ export default function ArchitectureGraph({
   }, []);
 
   return (
-    <div className="relative h-[900px] min-w-0 w-full overflow-hidden">
+    <>
+      <ResponsiveArchitectureFlow
+        nodes={graphNodes}
+        activeId={activeFlow ?? activeNode}
+        onSelect={(id) => {
+          setActiveNode(id);
+          onSelect(id);
+        }}
+        tone="cyan"
+      />
+      <div className="relative hidden h-[900px] min-w-0 w-full overflow-hidden lg:block">
       <svg
         className="absolute inset-0 h-full w-full"
         viewBox="0 0 1440 920"
@@ -284,6 +295,7 @@ export default function ArchitectureGraph({
           );
         })}
       </svg>
-    </div>
+      </div>
+    </>
   );
 }

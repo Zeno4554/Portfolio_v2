@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 
 interface Props {
@@ -10,7 +10,15 @@ interface Props {
 export default function useDeepDiveAnimation({
   open,
 }: Props) {
+  const hasOpened = useRef(false);
+
   useLayoutEffect(() => {
+    if (!open && !hasOpened.current) return;
+
+    if (open) {
+      hasOpened.current = true;
+    }
+
     const ctx = gsap.context(() => {
       const overlay = "[data-deepdive-overlay]";
       const consolePanel = "[data-deepdive-console]";

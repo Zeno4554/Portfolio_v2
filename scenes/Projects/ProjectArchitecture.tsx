@@ -196,8 +196,6 @@ export default function ProjectArchitecture({
               top-1/2
               z-20
               w-[min(520px,88vw)]
-              -translate-x-1/2
-              -translate-y-1/2
             "
           >
             {/* Reactor Glow */}
@@ -214,6 +212,7 @@ export default function ProjectArchitecture({
               className="
                 relative
                 flex
+                w-full
                 h-[min(520px,88vw)]
                 items-center
                 justify-center
@@ -239,7 +238,6 @@ export default function ProjectArchitecture({
               left-1/2
               top-[82%]
               z-30
-              -translate-x-1/2
             "
           >
             <button

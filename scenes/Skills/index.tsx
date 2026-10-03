@@ -5,7 +5,7 @@ import { Section } from "@/components/common/Section";
 import SkillsGalaxy from "./SkillsGalaxy";
 import { useGalaxyAnimation } from "./useGalaxyAnimation";
 import { getGalaxySize, CATEGORY_CLUSTERS } from "./layout";
-import { SkillNodeData } from "./galaxyData";
+import { skillNodes, SkillNodeData } from "./galaxyData";
 
 export function SkillsGalaxySection() {
   useGalaxyAnimation();
@@ -31,7 +31,7 @@ export function SkillsGalaxySection() {
       id="skills"
       index="03"
       label="Skills Galaxy"
-      className="relative overflow-hidden py-32 bg-[#030504]"
+      className="relative overflow-hidden bg-[#030504] py-20 sm:py-32"
     >
       {/* Background Watermark */}
       <h1
@@ -50,6 +50,7 @@ export function SkillsGalaxySection() {
           uppercase
           tracking-[-0.08em]
           text-white/[0.02]
+          max-sm:hidden
         "
       >
         GALAXY
@@ -63,7 +64,7 @@ export function SkillsGalaxySection() {
           <span className="h-px w-6 bg-[#69ff59]/50" />
         </div>
 
-        <h2 className="font-display text-4xl font-black uppercase tracking-[-0.04em] text-[#e8e4d8] md:text-5xl">
+        <h2 className="font-display text-3xl font-black uppercase tracking-[-0.04em] text-[#e8e4d8] sm:text-4xl md:text-5xl">
           Technology Constellation
         </h2>
 
@@ -80,7 +81,8 @@ export function SkillsGalaxySection() {
                 key={opt.id}
                 type="button"
                 onClick={() => setActiveCategory(opt.id)}
-                className={`rounded-full border px-3.5 py-1.5 font-mono text-[8.5px] uppercase tracking-[0.2em] transition-all duration-300 ${
+                aria-pressed={isActive}
+                className={`rounded-full border px-3 py-2 font-mono text-[8px] uppercase tracking-[0.12em] transition-colors duration-300 sm:px-3.5 sm:py-1.5 sm:text-[8.5px] sm:tracking-[0.2em] ${
                   isActive
                     ? "border-white/60 bg-white/10 text-white shadow-[0_0_15px_rgba(255,255,255,0.2)]"
                     : "border-white/10 bg-black/40 text-white/50 hover:border-white/30 hover:text-white/80"
@@ -97,9 +99,8 @@ export function SkillsGalaxySection() {
         </div>
       </div>
 
-      {/* 3D Constellation Galaxy Container */}
       <div
-        className="relative z-10 flex justify-center"
+        className="relative z-10 hidden justify-center min-[1280px]:flex"
         style={{
           minHeight: height + 60,
         }}
@@ -107,8 +108,80 @@ export function SkillsGalaxySection() {
         <SkillsGalaxy activeCategory={activeCategory} />
       </div>
 
+      <div className="relative z-10 mx-auto w-full max-w-4xl px-4 min-[1280px]:hidden">
+        <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-3 font-mono text-[9px] uppercase tracking-[0.18em] text-white/35">
+          <span>Constellation map</span>
+          <span>
+            {skillNodes.filter((skill) =>
+              activeCategory === "all" || skill.category === activeCategory
+            ).length}{" "}
+            nodes
+          </span>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+          {Object.values(CATEGORY_CLUSTERS)
+            .filter((category) =>
+              activeCategory === "all" || category.id === activeCategory
+            )
+            .map((category) => {
+              const skills = skillNodes.filter(
+                (skill) => skill.category === category.id
+              );
+
+              return (
+                <section
+                  key={category.id}
+                  aria-label={category.label}
+                  className="relative min-w-0 overflow-hidden rounded-2xl border bg-black/35 p-4 sm:p-5"
+                  style={{ borderColor: `${category.color}45` }}
+                >
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -right-10 -top-12 h-32 w-32 rounded-full opacity-20 blur-3xl"
+                    style={{ backgroundColor: category.color }}
+                  />
+                  <div className="relative flex items-center justify-between gap-3">
+                    <div className="flex min-w-0 items-center gap-2.5">
+                      <span
+                        aria-hidden="true"
+                        className="h-2.5 w-2.5 shrink-0 rounded-full"
+                        style={{
+                          backgroundColor: category.color,
+                          boxShadow: `0 0 12px ${category.color}`,
+                        }}
+                      />
+                      <h3
+                        className="min-w-0 font-mono text-[10px] font-bold uppercase tracking-[0.14em] sm:text-xs"
+                        style={{ color: category.color }}
+                      >
+                        {category.label}
+                      </h3>
+                    </div>
+                    <span className="shrink-0 font-mono text-[9px] text-white/35">
+                      {String(skills.length).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <div className="relative mt-4 flex flex-wrap gap-2">
+                    {skills.map((skill) => (
+                      <span
+                        key={skill.id}
+                        className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1.5 font-mono text-[10px] text-white/75 sm:text-xs"
+                      >
+                        {skill.label}
+                      </span>
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
+        </div>
+        <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.16em] text-white/30">
+          Choose a category to filter skills
+        </p>
+      </div>
+
       {/* Navigation Help Note */}
-      <div className="relative z-20 mt-4 text-center font-mono text-[7.5px] uppercase tracking-[0.25em] text-white/20">
+      <div className="relative z-20 mt-4 hidden text-center font-mono text-[7.5px] uppercase tracking-[0.25em] text-white/20 min-[1280px]:block">
         Move mouse to tilt camera · Hover node to reveal connections · Click to inspect
       </div>
     </Section>

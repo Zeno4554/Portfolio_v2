@@ -38,12 +38,13 @@ export default function NodeDetails({
 
         <h2
           className="
-            text-[46px]
+            text-[clamp(1.75rem,8vw,2.875rem)]
             leading-none
             font-black
             uppercase
             tracking-tight
             text-white
+            sm:text-[46px]
           "
         >
           {node.title}

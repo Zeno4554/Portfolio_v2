@@ -30,19 +30,25 @@ export default function BootSequence({
         flex
         items-center
         justify-center
+        p-4
         bg-black
         pointer-events-none
       "
     >
       <div
         className="
-          w-[720px]
-          rounded-3xl
+          w-full
+          max-w-[720px]
+          max-h-full
+          overflow-y-auto
+          rounded-2xl
           border
           border-white/10
           bg-black/70
-          p-12
+          p-6
           backdrop-blur-3xl
+          sm:rounded-3xl
+          sm:p-12
         "
       >
         <p
@@ -57,16 +63,18 @@ export default function BootSequence({
         <h1
           className="
             mt-6
-            text-6xl
+            text-[clamp(1.5rem,8vw,3.75rem)]
             font-black
+            leading-none
             uppercase
             text-white
+            sm:text-6xl
           "
         >
           INITIALIZING
         </h1>
 
-        <div className="mt-10 space-y-4">
+        <div className="mt-8 space-y-3 sm:mt-10 sm:space-y-4">
           {MODULES.map((module) => (
             <div
               key={module}

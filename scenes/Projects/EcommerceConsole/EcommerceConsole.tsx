@@ -29,7 +29,7 @@ export default function EcommerceConsole() {
   );
 
   return (
-    <div className="space-y-10 px-6 py-8 lg:px-10">
+    <div className="space-y-10 px-4 py-6 sm:px-6 sm:py-8 lg:px-10">
       <section className="grid gap-8 lg:grid-cols-[1.35fr_0.95fr]">
         <div className="space-y-4">
           <p className="text-sm uppercase tracking-[0.4em] text-slate-400">Engineering console</p>
@@ -64,8 +64,8 @@ export default function EcommerceConsole() {
         </div>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
-        <div className="space-y-6">
+      <section className="grid min-w-0 gap-6 lg:grid-cols-[1.25fr_0.75fr]">
+        <div className="min-w-0 space-y-6">
           <EcommerceArchitectureGraph activeFlow={activeStage ?? activeId} onSelect={setActiveId} />
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-3xl border border-white/10 bg-[#05080f]/90 p-6">
@@ -113,7 +113,7 @@ export default function EcommerceConsole() {
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <FolderExplorer activeId={activeId} />
           <ExecutionLog messages={messages} />
         </div>

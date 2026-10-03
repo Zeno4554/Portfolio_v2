@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { graphEdges, graphNodes } from "./architectureData";
+import ResponsiveArchitectureFlow from "../DeepDive/components/ResponsiveArchitectureFlow";
 
 interface Props {
   activeFlow?: string | null;
@@ -35,7 +36,17 @@ export default function SolarArchitectureGraph({
   );
 
   return (
-    <div className="relative h-[760px] min-w-0 w-full overflow-hidden rounded-3xl border border-white/10 bg-[#05080d]/90">
+    <>
+      <ResponsiveArchitectureFlow
+        nodes={graphNodes}
+        activeId={activeFlow ?? activeNode ?? graphNodes[0].id}
+        onSelect={(id) => {
+          setActiveNode(id);
+          onSelect(id);
+        }}
+        tone="emerald"
+      />
+      <div className="relative hidden h-[760px] min-w-0 w-full overflow-hidden rounded-3xl border border-white/10 bg-[#05080d]/90 lg:block">
       <svg
         className="absolute inset-0 h-full w-full"
         viewBox="0 0 1440 760"
@@ -129,6 +140,7 @@ export default function SolarArchitectureGraph({
           );
         })}
       </svg>
-    </div>
+      </div>
+    </>
   );
 }
