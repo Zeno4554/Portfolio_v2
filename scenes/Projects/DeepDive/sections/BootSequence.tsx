@@ -1,9 +1,12 @@
 "use client";
 
-import { Project } from "../../projectsData";
+interface BootProject {
+  title: string;
+  accent: string;
+}
 
 interface Props {
-  project: Project;
+  project: BootProject;
 }
 
 const MODULES = [

@@ -30,10 +30,14 @@ export default function EngineeringConsole({
     <section
       data-engineering-console
       className="
-        flex
+        grid
+        min-w-0
         gap-6
-        p-8
+        p-4
+        sm:p-6
         min-h-full
+        xl:grid-cols-[300px_minmax(0,1fr)_340px]
+        xl:p-8
       "
     >
       {/* =======================================
@@ -42,14 +46,15 @@ export default function EngineeringConsole({
 
       <aside
         className="
-          w-[300px]
-          shrink-0
+          w-full
+          min-w-0
           rounded-3xl
           border
           border-white/10
           bg-white/[0.03]
           backdrop-blur-xl
-          p-6
+          p-4
+          sm:p-6
         "
       >
         <div>
@@ -85,7 +90,8 @@ export default function EngineeringConsole({
           border-white/10
           bg-white/[0.03]
           backdrop-blur-xl
-          p-6
+          p-4
+          sm:p-6
         "
       >
         <div className="flex items-center justify-between">
@@ -166,13 +172,15 @@ export default function EngineeringConsole({
 
       <aside
         className="
-          w-[340px]
-          shrink-0
-          max-w-[380px]
-          min-h-0
-          flex
-          flex-col
-          gap-6
+        grid
+        min-w-0
+        min-h-0
+        gap-6
+        md:grid-cols-2
+        xl:flex
+        flex-col
+        xl:w-[340px]
+        xl:grid-cols-1
         "
       >
         <div
@@ -183,7 +191,8 @@ export default function EngineeringConsole({
             border-white/10
             bg-white/[0.03]
             backdrop-blur-xl
-            p-6
+            p-4
+            sm:p-6
           "
         >
           <NodeDetails node={activeNode} />
@@ -197,7 +206,8 @@ export default function EngineeringConsole({
             bg-white/[0.03]
             backdrop-blur-xl
             p-6
-            h-[360px]
+            h-[300px]
+            sm:h-[360px]
           "
         >
           <ExecutionLog active={activeNodeId} />

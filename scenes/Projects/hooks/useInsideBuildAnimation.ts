@@ -1,77 +1,74 @@
 "use client";
 
-import { useLayoutEffect } from "react";
-import { gsap } from "@/lib/gsap";
+import { useLayoutEffect, type RefObject } from "react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 
-export default function useInsideBuildAnimation() {
+export default function useInsideBuildAnimation(
+  scopeRef: RefObject<HTMLElement | null>
+) {
   useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      /*
-      ==========================================
-      Floating Project Nodes
-      ==========================================
-      */
+    const scope = scopeRef.current;
+    if (!scope) return;
 
-      gsap.utils
-        .toArray<HTMLElement>("[data-project-node]")
-        .forEach((node, index) => {
-          gsap.to(node, {
-            y: 10 + index * 2,
-            duration: 3.5 + index * 0.5,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-          });
+    const context = gsap.context(() => {
+      const selectAll = <T extends Element>(selector: string) =>
+        Array.from(scope.querySelectorAll<T>(selector));
+      const connectors = selectAll<SVGPathElement>("[data-connector]");
+      const blueprintNodes = selectAll<HTMLElement>("[data-blueprint-node]");
+      const loops: gsap.core.Animation[] = [];
+      const intro = gsap.timeline({ paused: true });
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set(connectors, { strokeDashoffset: 0 });
+        gsap.set(blueprintNodes, { opacity: 1, y: 0, scale: 1 });
+        return;
+      }
+
+      const addLoop = (
+        target: gsap.TweenTarget,
+        vars: gsap.TweenVars
+      ) => {
+        if (Array.isArray(target) && target.length === 0) return;
+        loops.push(gsap.to(target, { ...vars, paused: true }));
+      };
+
+      const nodes = selectAll<HTMLElement>("[data-project-node]");
+      nodes.forEach((node, index) => {
+        addLoop(node, {
+          y: 10 + index * 2,
+          duration: 3.5 + index * 0.5,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
         });
+      });
 
-      /*
-      ==========================================
-      Connector Draw Animation
-      ==========================================
-      */
-
-      gsap.utils
-        .toArray<SVGPathElement>("[data-connector]")
-        .forEach((line, index) => {
-          const length = line.getTotalLength();
-
-          gsap.set(line, {
-            strokeDasharray: length,
-            strokeDashoffset: length,
-          });
-
-          gsap.to(line, {
+      connectors.forEach((line, index) => {
+        const length = line.getTotalLength();
+        gsap.set(line, { strokeDasharray: length, strokeDashoffset: length });
+        intro.to(
+          line,
+          {
             strokeDashoffset: 0,
             duration: 1.2,
             ease: "power2.out",
-            delay: index * 0.15,
-          });
+          },
+          index * 0.15
+        );
+      });
+
+      const scannerLines = selectAll<HTMLElement>("[data-scanner-line]");
+      if (scannerLines.length > 0) {
+        gsap.set(scannerLines, { y: "-5%" });
+        addLoop(scannerLines, {
+          y: "105%",
+          duration: 2.2,
+          repeat: -1,
+          ease: "none",
         });
+      }
 
-      /*
-      ==========================================
-      Scanner Sweep
-      ==========================================
-      */
-
-      gsap.set("[data-scanner-line]", {
-        y: "-5%",
-      });
-
-      gsap.to("[data-scanner-line]", {
-        y: "105%",
-        duration: 2.2,
-        repeat: -1,
-        ease: "none",
-      });
-
-      /*
-      ==========================================
-      Status Dot
-      ==========================================
-      */
-
-      gsap.to("[data-status-dot]", {
+      addLoop(selectAll("[data-status-dot]"), {
         scale: 0.75,
         opacity: 0.3,
         duration: 0.8,
@@ -79,44 +76,28 @@ export default function useInsideBuildAnimation() {
         yoyo: true,
         ease: "sine.inOut",
       });
-
-      /*
-      ==========================================
-      Project Glow
-      ==========================================
-      */
-
-      gsap.to("[data-project-glow]", {
+      addLoop(selectAll("[data-project-glow]"), {
         opacity: 0.45,
         duration: 3,
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
       });
-
-      /*
-      ==========================================
-      Arc Reactor Rings
-      ==========================================
-      */
-
-      gsap.to("[data-ring-1]", {
+      addLoop(selectAll("[data-ring-1]"), {
         rotate: 360,
         svgOrigin: "250 250",
         duration: 24,
         repeat: -1,
         ease: "none",
       });
-
-      gsap.to("[data-ring-2]", {
+      addLoop(selectAll("[data-ring-2]"), {
         rotate: -360,
         svgOrigin: "250 250",
         duration: 16,
         repeat: -1,
         ease: "none",
       });
-
-      gsap.to("[data-ring-3]", {
+      addLoop(selectAll("[data-ring-3]"), {
         rotate: 360,
         svgOrigin: "250 250",
         duration: 10,
@@ -124,89 +105,45 @@ export default function useInsideBuildAnimation() {
         ease: "none",
       });
 
-      /*
-      ==========================================
-      Fixed Energy Nodes
-      ==========================================
-      */
-
-      gsap.utils
-        .toArray<SVGCircleElement>("[data-orbit-dot]")
-        .forEach((dot, index) => {
-          gsap
-            .timeline({
-              repeat: -1,
-              delay: index * 0.18,
-            })
+      selectAll<SVGCircleElement>("[data-orbit-dot]").forEach(
+        (dot, index) => {
+          const orbit = gsap
+            .timeline({ repeat: -1, delay: index * 0.18, paused: true })
             .to(dot, {
               scale: 1.55,
               duration: 0.35,
               transformOrigin: "center center",
               ease: "power2.out",
             })
-            .to(dot, {
-              scale: 1,
-              duration: 0.9,
-              ease: "sine.inOut",
-            });
-        });
+            .to(dot, { scale: 1, duration: 0.9, ease: "sine.inOut" });
+          loops.push(orbit);
+        }
+      );
 
-      /*
-      ==========================================
-      Energy Arc
-      ==========================================
-      */
-
-      gsap.to("[data-energy-arc]", {
+      addLoop(selectAll("[data-energy-arc]"), {
         rotate: 360,
         svgOrigin: "250 250",
         duration: 5,
         repeat: -1,
         ease: "none",
       });
-
-      /*
-      ==========================================
-      Energy Wave
-      ==========================================
-      */
-
-      gsap.fromTo(
-        "[data-energy-wave]",
-        {
-          scale: 1,
-          opacity: 0.45,
-          transformOrigin: "center center",
-        },
-        {
-          scale: 1.45,
-          opacity: 0,
-          duration: 2,
-          repeat: -1,
-          ease: "power1.out",
-        }
-      );
-
-      /*
-      ==========================================
-      Mechanical Iris
-      ==========================================
-      */
-      /*
-      The iris is intentionally static.
-
-      Only the engineering rings rotate while the
-      turbine blades remain fixed like a real
-      mechanical assembly.
-      */
-
-      /*
-      ==========================================
-      Reactor Core
-      ==========================================
-      */
-
-      gsap.to("[data-reactor-core]", {
+      selectAll("[data-energy-wave]").forEach((wave) => {
+        loops.push(
+          gsap.fromTo(
+            wave,
+            { scale: 1, opacity: 0.45, transformOrigin: "center center" },
+            {
+              scale: 1.45,
+              opacity: 0,
+              duration: 2,
+              repeat: -1,
+              paused: true,
+              ease: "power1.out",
+            }
+          )
+        );
+      });
+      addLoop(selectAll("[data-reactor-core]"), {
         scale: 1.08,
         svgOrigin: "250 250",
         duration: 1.4,
@@ -215,39 +152,33 @@ export default function useInsideBuildAnimation() {
         ease: "sine.inOut",
       });
 
-      /*
-      ==========================================
-      Blueprint Scan
-      ==========================================
-      */
+      const blueprintScans = selectAll<HTMLElement>("[data-blueprint-scan]");
+      if (blueprintScans.length > 0) {
+        gsap.set(blueprintScans, { y: "-10%" });
+        addLoop(blueprintScans, {
+          y: "110%",
+          duration: 3,
+          repeat: -1,
+          ease: "none",
+        });
+      }
 
-      gsap.set("[data-blueprint-scan]", {
-        y: "-10%",
-      });
+      if (blueprintNodes.length > 0) {
+        intro.from(
+          blueprintNodes,
+          {
+            opacity: 0,
+            y: 40,
+            scale: 0.85,
+            stagger: 0.18,
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          0
+        );
+      }
 
-      gsap.to("[data-blueprint-scan]", {
-        y: "110%",
-        duration: 3,
-        ease: "none",
-        repeat: -1,
-      });
-
-      /*
-      ==========================================
-      Blueprint Modules
-      ==========================================
-      */
-
-      gsap.from("[data-blueprint-node]", {
-        opacity: 0,
-        y: 40,
-        scale: 0.85,
-        stagger: 0.18,
-        duration: 0.8,
-        ease: "power3.out",
-      });
-
-      gsap.to("[data-module-status]", {
+      addLoop(selectAll("[data-module-status]"), {
         scale: 0.65,
         opacity: 0.35,
         repeat: -1,
@@ -255,22 +186,35 @@ export default function useInsideBuildAnimation() {
         duration: 0.7,
         stagger: 0.15,
       });
-
-      /*
-      ==========================================
-      Reactor Glow
-      ==========================================
-      */
-
-      gsap.to("[data-reactor-glow]", {
+      addLoop(selectAll("[data-reactor-glow]"), {
         opacity: 0.45,
         duration: 2,
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
       });
-    });
 
-    return () => ctx.revert();
-  }, []);
+      const play = () => {
+        intro.play();
+        loops.forEach((animation) => animation.play());
+      };
+      const pause = () => {
+        intro.pause();
+        loops.forEach((animation) => animation.pause());
+      };
+
+      ScrollTrigger.create({
+        trigger: scope,
+        start: "top bottom",
+        end: "bottom top",
+        onEnter: play,
+        onEnterBack: play,
+        onLeave: pause,
+        onLeaveBack: pause,
+        onRefresh: (self) => (self.isActive ? play() : pause()),
+      });
+    }, scope);
+
+    return () => context.revert();
+  }, [scopeRef]);
 }

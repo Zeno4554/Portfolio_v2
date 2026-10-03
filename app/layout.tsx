@@ -5,7 +5,6 @@ import { AppProviders } from "@/providers";
 import { Header } from "@/components/layout/Header";
 import { SceneTracker } from "@/components/layout/SceneTracker";
 import { CustomCursor } from "@/components/cursor/CustomCursor";
-import { IntroLoader } from "@/components/loading/IntroLoader";
 import "./globals.css";
 
 // Body face: neutral, highly legible at small sizes for stat/data readouts.
@@ -46,20 +45,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body>
         <AppProviders>
-
-    {/* <IntroLoader /> */}
-
-    
-
-    <CustomCursor />
-
-    <Header />
-
-    <SceneTracker />
-
-    <main>{children}</main>
-
-</AppProviders>
+          <CustomCursor />
+          <Header />
+          <SceneTracker />
+          <main>{children}</main>
+        </AppProviders>
       </body>
     </html>
   );

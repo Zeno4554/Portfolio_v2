@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useRef } from "react";
 import SkillNode from "./SkillNode";
 import SkillEdge from "./SkillEdge";
+import { usePointerParallax } from "@/hooks/usePointerParallax";
 import {
   skillNodes,
   skillEdges,
@@ -26,49 +27,12 @@ export default function SkillsGalaxy({
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const [selectedNode, setSelectedNode] = useState<SkillNodeData | null>(null);
 
-  // Parallax rotation refs for 60 FPS direct DOM update
   const containerRef = useRef<HTMLDivElement>(null);
-  const targetRot = useRef({ x: 0, y: 0 });
-  const currentRot = useRef({ x: 0, y: 0 });
-  const rafId = useRef<number | null>(null);
-
-  // Smooth 60 FPS RAF lerp loop for parallax rotation
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const offsetX = (e.clientX - cx) / (rect.width / 2);
-      const offsetY = (e.clientY - cy) / (rect.height / 2);
-
-      targetRot.current = {
-        x: offsetX * 16,
-        y: -offsetY * 12,
-      };
-    };
-
-    const updateFrame = () => {
-      currentRot.current.x += (targetRot.current.x - currentRot.current.x) * 0.08;
-      currentRot.current.y += (targetRot.current.y - currentRot.current.y) * 0.08;
-
-      if (containerRef.current) {
-        containerRef.current.style.transform = `perspective(1200px) rotateX(${currentRot.current.y.toFixed(
-          2
-        )}deg) rotateY(${currentRot.current.x.toFixed(2)}deg) translateZ(0)`;
-      }
-
-      rafId.current = requestAnimationFrame(updateFrame);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    rafId.current = requestAnimationFrame(updateFrame);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      if (rafId.current) cancelAnimationFrame(rafId.current);
-    };
-  }, []);
+  usePointerParallax(containerRef, {
+    perspective: 1200,
+    rotateX: 12,
+    rotateY: 16,
+  });
 
   // Compute connected nodes for hover state
   const connectedNodeIds = useMemo(() => {

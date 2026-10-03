@@ -5,6 +5,10 @@ import { gsap, ScrollTrigger } from "./gsap";
 
 let lenis: Lenis | null = null;
 
+const syncLenisWithGsap = (time: number) => {
+  lenis?.raf(time * 1000);
+};
+
 /**
  * Creates the single Lenis instance for the app and syncs it to GSAP's
  * ticker so ScrollTrigger stays in lockstep with smooth-scroll (instead of
@@ -22,10 +26,7 @@ export function createLenis() {
 
   lenis.on("scroll", ScrollTrigger.update);
 
-  gsap.ticker.add((time) => {
-    lenis?.raf(time * 1000);
-  });
-  gsap.ticker.lagSmoothing(0);
+  gsap.ticker.add(syncLenisWithGsap);
 
   return lenis;
 }
@@ -35,6 +36,7 @@ export function getLenis() {
 }
 
 export function destroyLenis() {
+  gsap.ticker.remove(syncLenisWithGsap);
   lenis?.destroy();
   lenis = null;
 }

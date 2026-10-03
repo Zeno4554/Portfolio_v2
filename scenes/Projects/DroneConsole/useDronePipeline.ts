@@ -44,6 +44,9 @@ export default function useDronePipeline() {
     }
 
     const stage = stages[stageIndex];
+    if (!stage) {
+      throw new Error(`The drone pipeline has no stage at index ${stageIndex}.`);
+    }
     setActiveStage(stage);
     setMessages((prev) => [
       ...prev,

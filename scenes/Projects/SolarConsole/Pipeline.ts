@@ -9,7 +9,7 @@ export type SolarStageId =
   | "power-analytics"
   | "dashboard";
 
-export const SOLAR_STAGES: SolarStageId[] = [
+export const SOLAR_STAGES: [SolarStageId, ...SolarStageId[]] = [
   "solar-panel",
   "esp8266",
   "sensor-collection",

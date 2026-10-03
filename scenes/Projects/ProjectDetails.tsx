@@ -54,11 +54,11 @@ export default function ProjectDetails({
           "
         />
 
-        <div className="relative z-10 p-10">
+        <div className="relative z-10 p-5 sm:p-8 lg:p-10">
 
           {/* Header */}
 
-          <div className="flex items-center justify-between border-b border-white/10 pb-6">
+          <div className="flex flex-col gap-6 border-b border-white/10 pb-6 sm:flex-row sm:items-center sm:justify-between">
 
             <div>
 
@@ -74,10 +74,11 @@ export default function ProjectDetails({
               <h2
                 className="
                   mt-4
-                  text-5xl
+                  text-3xl
                   font-black
                   uppercase
                   text-white
+                  sm:text-5xl
                 "
               >
                 {title}
@@ -85,9 +86,9 @@ export default function ProjectDetails({
 
             </div>
 
-            <div className="text-right">
+            <div className="text-left sm:text-right">
 
-              <div className="flex items-center justify-end gap-3">
+              <div className="flex items-center gap-3 sm:justify-end">
 
                 <div
                   className="h-3 w-3 rounded-full"
@@ -118,7 +119,7 @@ export default function ProjectDetails({
 
           {/* Console */}
 
-          <div className="mt-10 grid grid-cols-3 gap-12">
+          <div className="mt-10 grid gap-8 sm:grid-cols-3 sm:gap-6 lg:gap-12">
 
             {/* Left */}
 
@@ -129,7 +130,7 @@ export default function ProjectDetails({
               </p>
 
               <p
-                className="mt-3 text-2xl font-bold"
+                className="mt-3 text-xl font-bold sm:text-2xl"
                 style={{
                   color: accent,
                 }}
@@ -147,7 +148,7 @@ export default function ProjectDetails({
                 FOCUS
               </p>
 
-              <p className="mt-3 text-2xl font-bold text-white">
+              <p className="mt-3 text-xl font-bold text-white sm:text-2xl">
                 {title}
               </p>
 
@@ -162,7 +163,7 @@ export default function ProjectDetails({
               </p>
 
               <p
-                className="mt-3 text-2xl font-bold"
+                className="mt-3 text-xl font-bold sm:text-2xl"
                 style={{
                   color: accent,
                 }}
@@ -186,9 +187,11 @@ export default function ProjectDetails({
               className="
                 mt-5
                 max-w-4xl
-                text-lg
-                leading-9
+                text-base
+                leading-7
                 text-white/65
+                sm:text-lg
+                sm:leading-9
               "
             >
               {description}

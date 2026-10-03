@@ -2,15 +2,7 @@ export interface InsideBuildModule {
   id: string;
   title: string;
   tech: string;
-  responsibilities: string[];
-  flow: string[];
-  folders: string[];
-  engineeringNotes: string;
-  metrics: {
-    latency: string;
-    status: string;
-    load: string;
-  };
+  description: string;
   x: string;
   y: string;
 }

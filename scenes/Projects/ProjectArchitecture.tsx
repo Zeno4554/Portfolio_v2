@@ -19,14 +19,17 @@ export default function ProjectArchitecture({
   project,
   onOpen,
 }: Props) {
+  const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
   const nodeRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
-  useInsideBuildAnimation();
+  useInsideBuildAnimation(sectionRef);
 
-  const [activeModule, setActiveModule] = useState(project.insideBuild[0]);
+  const [activeModule, setActiveModule] = useState(
+    project.insideBuild[0] ?? null
+  );
 
   const [reactorActive, setReactorActive] = useState(false);
 
@@ -78,7 +81,11 @@ export default function ProjectArchitecture({
             y2: cy,
           };
         })
-        .filter(Boolean) as any[];
+        .filter(
+          (
+            connector
+          ): connector is NonNullable<typeof connector> => connector !== null
+        );
 
       setConnectors(next);
     };
@@ -100,7 +107,10 @@ export default function ProjectArchitecture({
   }, [project, activeModule]);
 
   return (
-    <section className="relative overflow-hidden py-44">
+    <section
+      ref={sectionRef}
+      className="relative overflow-hidden py-24 sm:py-44"
+    >
       {/* Ambient Background */}
       <div
         className="absolute inset-0 opacity-20 blur-[240px]"
@@ -146,7 +156,7 @@ export default function ProjectArchitecture({
             className="
               mt-5
               font-display
-              text-[clamp(4rem,7vw,6rem)]
+              text-[clamp(2.5rem,7vw,6rem)]
               font-black
               uppercase
               leading-none
@@ -156,7 +166,7 @@ export default function ProjectArchitecture({
             SYSTEM ANALYSIS
           </h2>
 
-          <p className="mx-auto mt-8 max-w-3xl text-xl leading-relaxed text-white/60">
+          <p className="mx-auto mt-8 max-w-3xl px-5 text-base leading-relaxed text-white/60 sm:text-xl">
             Live architectural breakdown of the complete system showing
             how every layer communicates to power the application.
           </p>
@@ -166,6 +176,7 @@ export default function ProjectArchitecture({
         <div
           ref={containerRef}
           className="
+            project-architecture-layout
             relative
             mx-auto
             mt-28
@@ -179,11 +190,12 @@ export default function ProjectArchitecture({
             ref={imageRef}
             data-project-image
             className="
+              project-architecture-reactor
               absolute
               left-1/2
               top-1/2
               z-20
-              w-[520px]
+              w-[min(520px,88vw)]
               -translate-x-1/2
               -translate-y-1/2
             "
@@ -202,7 +214,7 @@ export default function ProjectArchitecture({
               className="
                 relative
                 flex
-                h-[520px]
+                h-[min(520px,88vw)]
                 items-center
                 justify-center
               "
@@ -222,6 +234,7 @@ export default function ProjectArchitecture({
           {/* Console Button */}
           <div
             className="
+              project-architecture-cta
               absolute
               left-1/2
               top-[82%]
@@ -251,7 +264,7 @@ export default function ProjectArchitecture({
                   font-mono
                   text-xs
                   uppercase
-                  tracking-[.45em]
+                  tracking-[.2em] sm:tracking-[.45em]
                   text-white/80
                   group-hover:text-white
                 "
@@ -269,7 +282,7 @@ export default function ProjectArchitecture({
               x2={connector.x2}
               y2={connector.y2}
               accent={project.accent}
-              active={activeModule.id === connector.id}
+              active={activeModule?.id === connector.id}
             />
           ))}
 
@@ -285,21 +298,23 @@ export default function ProjectArchitecture({
               accent={project.accent}
               x={module.x}
               y={module.y}
-              active={activeModule.id === module.id}
+              active={activeModule?.id === module.id}
               onHover={() => setActiveModule(module)}
             />
           ))}
         </div>
 
         {/* Details */}
-        <div className="mt-10">
-          <ProjectDetails
-            title={activeModule.title}
-            tech={activeModule.tech}
-            description={activeModule.description}
-            accent={project.accent}
-          />
-        </div>
+        {activeModule && (
+          <div className="mt-10">
+            <ProjectDetails
+              title={activeModule.title}
+              tech={activeModule.tech}
+              description={activeModule.description}
+              accent={project.accent}
+            />
+          </div>
+        )}
       </div>
     </section>
   );

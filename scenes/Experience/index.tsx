@@ -1,20 +1,29 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState, useEffect } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { Section } from "@/components/common/Section";
 import { experience } from "@/data/experience";
 import { gsap } from "@/lib/gsap";
+import { usePointerParallax } from "@/hooks/usePointerParallax";
 
 function formatRange(start: string, end: string) {
   const fmt = (d: string) => {
-    const [year, month] = d.split("-");
-    const dateObj = new Date(parseInt(year, 10), parseInt(month, 10) - 1);
+    const [year = "", month = ""] = d.split("-");
+
+    const dateObj = new Date(
+      parseInt(year, 10),
+      parseInt(month, 10) - 1
+    );
+
     return dateObj.toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
     });
   };
-  return `${fmt(start)} — ${end === "present" ? "Present" : fmt(end)}`;
+
+  return `${fmt(start)} — ${
+    end === "present" ? "Present" : fmt(end)
+  }`;
 }
 
 export function Experience() {
@@ -22,47 +31,11 @@ export function Experience() {
   const listRef = useRef<HTMLDivElement>(null);
   const [activeMissionIndex, setActiveMissionIndex] = useState<number>(0);
 
-  // Smooth 60 FPS mouse parallax offset
-  const targetRot = useRef({ x: 0, y: 0 });
-  const currentRot = useRef({ x: 0, y: 0 });
-  const rafId = useRef<number | null>(null);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const offsetX = (e.clientX - cx) / (rect.width / 2);
-      const offsetY = (e.clientY - cy) / (rect.height / 2);
-
-      targetRot.current = {
-        x: offsetX * 12,
-        y: -offsetY * 8,
-      };
-    };
-
-    const updateFrame = () => {
-      currentRot.current.x += (targetRot.current.x - currentRot.current.x) * 0.08;
-      currentRot.current.y += (targetRot.current.y - currentRot.current.y) * 0.08;
-
-      if (containerRef.current) {
-        containerRef.current.style.transform = `perspective(1000px) rotateX(${currentRot.current.y.toFixed(
-          2
-        )}deg) rotateY(${currentRot.current.x.toFixed(2)}deg) translateZ(0)`;
-      }
-
-      rafId.current = requestAnimationFrame(updateFrame);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    rafId.current = requestAnimationFrame(updateFrame);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      if (rafId.current) cancelAnimationFrame(rafId.current);
-    };
-  }, []);
+  usePointerParallax(containerRef, {
+    perspective: 1000,
+    rotateX: 8,
+    rotateY: 12,
+  });
 
   useLayoutEffect(() => {
     const el = listRef.current;
@@ -167,7 +140,7 @@ export function Experience() {
         {/* 3D Parallax Outer Frame */}
         <div
           ref={containerRef}
-          className="will-change-transform transition-transform duration-700 ease-out"
+          className="transform-gpu"
         >
           <div ref={listRef} className="space-y-8">
             {experience.map((role, idx) => {

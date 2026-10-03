@@ -30,7 +30,7 @@ function SkillEdge({
 
   return (
     <div
-      className={`absolute will-change-transform transition-opacity duration-500 ${
+      className={`absolute transition-opacity duration-500 ${
         isDimmed ? "opacity-15" : isHighlighted ? "opacity-100 z-30" : "opacity-40"
       }`}
       style={{
@@ -62,7 +62,7 @@ function SkillEdge({
       {/* Animated Luminous Edge */}
       <div
         data-edge
-        className="will-change-transform absolute left-0 top-1/2 h-[1px] w-full -translate-y-1/2 origin-left scale-x-0 rounded-full transition-all duration-300"
+        className="absolute left-0 top-1/2 h-[1px] w-full -translate-y-1/2 origin-left scale-x-0 rounded-full transition-all duration-300"
         style={{
           backgroundColor: cluster.color,
           boxShadow: isHighlighted ? `0 0 12px ${cluster.color}` : undefined,

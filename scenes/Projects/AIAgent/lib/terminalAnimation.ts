@@ -5,6 +5,7 @@ export function streamAssistantResponse(
 ) {
   const words = text.split(" ");
   let index = 0;
+
   const handle = window.setInterval(() => {
     if (index >= words.length) {
       window.clearInterval(handle);
@@ -12,10 +13,15 @@ export function streamAssistantResponse(
       return;
     }
 
-    onChunk(words[index] + (index === words.length - 1 ? "" : " "));
+    onChunk(
+      words[index] +
+        (index === words.length - 1 ? "" : " ")
+    );
+
     index += 1;
   }, 90);
 
   return () => {
     window.clearInterval(handle);
   };
+}

@@ -11,7 +11,10 @@ export default function ProjectHero({
   project,
 }: ProjectHeroProps) {
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section
+      data-project-hero
+      className="relative min-h-screen overflow-hidden"
+    >
 
       {/* Animated Glow */}
       <div

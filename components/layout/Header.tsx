@@ -16,16 +16,18 @@ export function Header() {
         inset-x-0
         top-0
         flex
-        items-center
-        justify-end
-        px-6
-        py-5
+        justify-start
+        px-3
+        py-3
+        sm:px-6
+        sm:py-5
         md:px-12
+        md:justify-end
       "
     >
       <nav
         aria-label="Scene navigation"
-        className="hidden gap-1 md:flex"
+        className="scene-navigation flex max-w-full gap-1 overflow-x-auto"
       >
         {SCENES.map((scene) => (
           <a
@@ -35,7 +37,7 @@ export function Header() {
               activeScene === scene.id ? "true" : undefined
             }
             className={cn(
-              "rounded-full px-4 py-2 font-mono text-xs tracking-wide transition-colors duration-300",
+              "shrink-0 rounded-full px-2.5 py-2 font-mono text-[10px] tracking-wide transition-colors duration-300 sm:px-4 sm:text-xs",
               activeScene === scene.id
                 ? "text-aurora-blue"
                 : "text-ink-muted hover:text-ink"

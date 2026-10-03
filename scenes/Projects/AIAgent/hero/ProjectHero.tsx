@@ -12,7 +12,10 @@ export default function ProjectHero({
   project,
 }: Props) {
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section
+      data-project-hero
+      className="relative min-h-screen overflow-hidden"
+    >
 
       <div
         className="absolute inset-0 opacity-20 blur-[220px]"
@@ -47,14 +50,21 @@ export default function ProjectHero({
           z-10
           mx-auto
           flex
+          w-full
           min-h-screen
           max-w-7xl
-          items-center
-          gap-24
-          px-12
+          flex-col
+          items-stretch
+          gap-12
+          px-5
+          py-24
+          lg:flex-row
+          lg:items-center
+          lg:gap-24
+          lg:px-12
         "
       >
-        <div className="max-w-3xl flex-1">
+        <div className="w-full min-w-0 max-w-3xl flex-1">
 
           <p
             className="font-mono text-sm tracking-[.45em]"
@@ -69,7 +79,7 @@ export default function ProjectHero({
             className="
               mt-6
               font-display
-              text-[clamp(4rem,8vw,8rem)]
+              text-[clamp(3rem,8vw,8rem)]
               font-black
               uppercase
               leading-[0.9]
@@ -83,9 +93,11 @@ export default function ProjectHero({
             className="
               mt-10
               max-w-2xl
-              text-xl
-              leading-relaxed
+              text-base
+              leading-7
               text-white/70
+              sm:text-xl
+              sm:leading-relaxed
             "
           >
             {project.tagline}
@@ -113,13 +125,13 @@ export default function ProjectHero({
 
         </div>
 
-        <div className="relative w-full max-w-[720px] shrink-0 aspect-[16/9] min-h-[420px] lg:w-[50%]">
+        <div className="relative aspect-[16/9] min-h-[280px] w-full max-w-[720px] shrink-0 sm:min-h-[420px] lg:w-[50%]">
 
           <div
             className="
               absolute
               inset-0
-              rounded-[42px]
+              rounded-[24px] sm:rounded-[42px]
               blur-[140px]
             "
             style={{
@@ -133,7 +145,7 @@ export default function ProjectHero({
               relative
               h-full
               overflow-hidden
-              rounded-[42px]
+              rounded-[24px] sm:rounded-[42px]
               border
               border-white/10
               bg-white/[0.03]
@@ -148,7 +160,7 @@ export default function ProjectHero({
               className="
                 h-full
                 w-full
-                rounded-[42px]
+                rounded-[24px] sm:rounded-[42px]
                 object-cover
                 transition-transform
                 duration-700

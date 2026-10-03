@@ -30,7 +30,7 @@ export function Contact() {
 
         <nav
           aria-label="Social links"
-          className="flex gap-6"
+          className="flex flex-wrap gap-x-6 gap-y-3"
         >
           {socialLinks
             .filter((l) => l.id !== "mail")
@@ -48,7 +48,7 @@ export function Contact() {
         </nav>
       </div>
 
-      <footer className="mt-24 flex items-center justify-between border-t border-glass-border pt-8 font-mono text-[11px] text-ink-faint">
+      <footer className="mt-24 flex flex-col gap-3 border-t border-glass-border pt-8 font-mono text-[11px] text-ink-faint sm:flex-row sm:items-center sm:justify-between">
         <span>© {new Date().getFullYear()}</span>
         <span>Built with Next.js, GSAP & React Three Fiber</span>
       </footer>

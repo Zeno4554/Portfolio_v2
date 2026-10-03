@@ -31,6 +31,10 @@ export default function FolderExplorer({
   const currentFolder =
     ACTIVE_FOLDER[activeNode];
 
+  if (!currentFolder) {
+    throw new Error(`No project folder is configured for "${activeNode}".`);
+  }
+
   return (
     <div
       data-folder-explorer

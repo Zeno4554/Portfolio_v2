@@ -1,6 +1,6 @@
 "use client";
 
-import { InsideBuildModule } from "./projectsData";
+import type { InsideBuildModule } from "../projectsData";
 
 interface Props {
   module: InsideBuildModule;

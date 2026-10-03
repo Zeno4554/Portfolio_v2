@@ -38,20 +38,20 @@ export default function Hero() {
       {/* Hero */}
       <div
         ref={hero}
-        className="relative z-20 flex min-h-screen flex-col items-center justify-center px-6 text-center"
+        className="relative z-20 flex min-h-screen flex-col items-center justify-center px-5 py-24 text-center sm:px-6"
       >
-        <div className="space-y-8">
+        <div className="w-full space-y-8">
           <div className="space-y-4">
             <p
               ref={role}
-              className="text-xs uppercase tracking-[0.6em] text-blue-400/80"
+              className="text-[10px] uppercase tracking-[0.3em] text-blue-400/80 sm:text-xs sm:tracking-[0.6em]"
             >
               {HERO.role}
             </p>
 
             <h1
               ref={title}
-              className="font-display text-[clamp(5rem,13vw,12rem)] font-black uppercase leading-none tracking-[-0.07em] text-white"
+              className="font-display text-[clamp(3rem,14vw,12rem)] font-black uppercase leading-none tracking-[-0.07em] text-white"
             >
               {HERO.title}
             </h1>
@@ -59,7 +59,7 @@ export default function Hero() {
 
           <p
             ref={mission}
-            className="mx-auto max-w-2xl text-lg leading-9 text-white/65"
+            className="mx-auto max-w-2xl text-base leading-7 text-white/65 sm:text-lg sm:leading-9"
           >
             Building scalable software.
             <br />

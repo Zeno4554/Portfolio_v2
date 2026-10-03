@@ -31,7 +31,7 @@ function SkillNode({
     <div
       data-skill-node
       data-category={props.category}
-      className={`absolute cursor-pointer will-change-transform transition-all duration-500 ease-out ${
+      className={`absolute cursor-pointer transition-all duration-500 ease-out ${
         isDimmed ? "opacity-25 scale-90 blur-[0.5px]" : "opacity-100 scale-100"
       }`}
       style={{

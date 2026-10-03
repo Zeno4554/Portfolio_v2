@@ -47,11 +47,13 @@ export default function usePipeline() {
   const [activeStage, setActiveStage] = useState<StageId | null>(null);
   const [logStage, setLogStage] = useState<StageId | null>(null);
   const [stageIndex, setStageIndex] = useState<number>(0);
+
   const [prompt, setPrompt] = useState(
     "Build me a production-ready AI assistant with memory, Retrieval-Augmented Generation, tool calling, streaming responses, and long-term conversation context."
   );
+
   const conversation = useConversation();
-  const { append, reset, messages } = conversation;
+  const { append } = conversation;
 
   const stages = useMemo(() => STAGES, []);
 
@@ -62,16 +64,29 @@ export default function usePipeline() {
       setRunning(false);
       setActiveStage(null);
       setLogStage(null);
+
       append({
         role: "assistant",
         text: "Execution complete. Response delivered successfully.",
       });
+
       return;
     }
 
     const stage = stages[stageIndex];
+
+    // Strict TypeScript can treat indexed array access as undefined.
+    // Guard it without changing the normal pipeline behavior.
+    if (!stage) {
+      setRunning(false);
+      setActiveStage(null);
+      setLogStage(null);
+      return;
+    }
+
     setActiveStage(stage);
     setLogStage(stage);
+
     append({
       role: "assistant",
       text: `Executing stage: ${stage.replace("-", " ")}.`,
@@ -98,6 +113,7 @@ export default function usePipeline() {
 
   const start = () => {
     if (running) return;
+
     conversation.reset(initialMessages);
     setStageIndex(0);
     setActiveStage(null);

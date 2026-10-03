@@ -1,3 +1,1 @@
-"use client";
-
-export { default } from "../../Projects/useProjectAnimation";
+export { default } from "../../useProjectAnimation";
