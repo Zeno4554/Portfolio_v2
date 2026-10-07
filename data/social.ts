@@ -3,7 +3,7 @@ import type { SocialLink, TimelineMilestone, StatEntry } from "@/types/content";
 export const socialLinks: SocialLink[] = [
   { id: "github", label: "GitHub", href: "https://github.com/", icon: "github" },
   { id: "linkedin", label: "LinkedIn", href: "https://linkedin.com/", icon: "linkedin" },
-  { id: "mail", label: "Email", href: "mailto:hello@example.com", icon: "mail" },
+  { id: "mail", label: "Email", href: "mailto:k.anurag0104@gmail.com", icon: "mail" },
 ];
 
 export const timeline: TimelineMilestone[] = [

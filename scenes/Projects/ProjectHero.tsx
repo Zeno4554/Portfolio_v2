@@ -66,23 +66,24 @@ export default function ProjectHero({
           <h1
             data-project-title
             className="
-              mt-6
+              mt-4 sm:mt-6
+              max-w-none
               font-display
-              text-[clamp(2.75rem,12vw,8rem)]
+              text-[clamp(1.75rem,8vw,3.75rem)]
               font-black
-              uppercase
-              leading-[0.9]
-              tracking-[-0.06em]
+              leading-[1.05]
+              tracking-[-0.045em]
               text-white
+              [text-wrap:balance]
             "
           >
-            {project.title}
+            {project.fullTitle}
           </h1>
 
           <p
             data-project-tagline
             className="
-              mt-10
+              mt-6 sm:mt-10
               max-w-2xl
               text-base
               leading-7
